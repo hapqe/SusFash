@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+
+  <title>Sustained Fashion</title>
+  <meta name="description" content="A Game About Sustained Fashion">
+
+  <meta property="twitter:image" content="" />
+  <meta property="og:image" content="" />
+
+  <meta name="robots" content="index,follow">
+  <meta name="url" content="http://needle.tools">
+
+  <link rel="stylesheet" href="./src/styles/style.css">
+  <link rel="stylesheet" href="./src/styles/font.css">
+</head>
+
+<body>
+  <script>
+    // hack for simple-peer
+    window.global = window;
+    var parcelRequire;
+  </script>
+  <script type="module" src="./src/generated/gen.js"></script>
+  <script type="module" src="./src/main.ts"></script>
+  <script>
+    function setTool(e) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('setTool', { detail: e }));
+    }
+    function resetCloth(e) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('resetCloth', { detail: e }));
+    }
+    function submitCloth(e) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('submitCloth', { detail: e }));
+    }
+  </script>
+
+  <needle-engine></needle-engine>
+
+  <div class="fill">
+    <div class="circle" onpointerdown="setTool(event)">
+      <img id="tool" src="./svgs/Camera.svg" alt="">
+    </div>
+    <div class="circle" onpointerdown="resetCloth(event)">
+      <img src="./svgs/Reset.svg" alt="">
+    </div>
+  </div>
+  <div class="fill" style="right: 0; left: unset;">
+    <div class="circle" onpointerdown="submitCloth(event)">
+      <img src="./svgs/Done.svg" alt="">
+    </div>
+    <canvas id="clothColor" hidden color="white" width="200" height="200"></canvas>
+  </div>
+  <div id="dim" class="fill contain" style="opacity: 0; background-color: black; padding: 0; transition: 300ms;">
+
+  </div>
+  <div id="wrapper" class="fill" style="height: calc(100vh - 4em); width: 100%; padding: 0; overflow: visible;">
+
+  </div>
+</body>
+</html>
