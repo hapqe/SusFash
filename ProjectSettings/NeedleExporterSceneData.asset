@@ -20,5 +20,23 @@ MonoBehaviour:
     Projects:
     - ProjectPath: Needle/Design
     BuilderScene: 
+  - Path: Assets/Scenes/Hub.unity
+    Projects:
+    - ProjectPath: Needle/Hub
+    BuilderScene: 
+  - Path: Assets/Scenes/Earth.unity
+    Projects:
+    - ProjectPath: Needle/Earth
+    BuilderScene: 
+  - Path: Assets/Scenes/Template.unity
+    Projects: []
+    BuilderScene: 
+  - Path: Assets/Scenes/Cotton.unity
+    Projects:
+    - ProjectPath: Needle/Cotton
+    BuilderScene: 
   Projects:
   - ProjectPath: Needle/Design
+  - ProjectPath: Needle/Hub
+  - ProjectPath: Needle/Earth
+  - ProjectPath: Needle/Cotton
