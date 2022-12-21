@@ -59,7 +59,7 @@ export class Segment {
 export class Cloth extends Behaviour {
     private handler?: MeshHandler;
     segments: Segment[] = [];
-    subdivisions = 18;
+    subdivisions = 20;
     integrationSteps = 10;
     simulationSpeed = .1;
     public cutting = false;

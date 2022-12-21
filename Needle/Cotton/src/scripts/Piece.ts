@@ -1,4 +1,4 @@
-import { Behaviour, BoxCollider, Collider, DragControls, findObjectOfType, getComponent, MeshRenderer, Rigidbody, serializable } from '@needle-tools/engine';
+import { AudioSource, Behaviour, BoxCollider, Collider, Collision, DragControls, findObjectOfType, getComponent, MeshRenderer, Rigidbody, serializable } from '@needle-tools/engine';
 import { Material, Vector2, Vector3 } from 'three';
 import { Bucket } from './Bucket';
 import { DragAble } from './Dragable';
@@ -16,19 +16,34 @@ export class CottonPiece extends Behaviour {
     private dragged = false;
     private free = false;
 
-    private dragLimit = .6;
+    private dragLimit = .5;
 
+    private static dragStrenght = 1;
+
+    private audio?: AudioSource;
+
+    private initial?: { pos: Vector3, rot: Vector3 };
+    
     start(): void {
+        this.initial = {
+            // @ts-ignore
+            pos: this.gameObject.position.clone(),
+            // @ts-ignore
+            rot: this.gameObject.rotation.clone()
+        };
+        
         this.rigidbody = this.gameObject.getComponent(Rigidbody)!;
         this.drag = this.gameObject.getComponent(DragAble)!;
         this.tree = findObjectOfType(Tree, this.context, true);
         this.bucket = findObjectOfType(Bucket, this.context, true);
 
+        this.audio = this.gameObject.addNewComponent(AudioSource)!;
+
         // @ts-ignore
         this.startPos = this.gameObject.position.clone();
-        this.dragLimit = this.dragLimit * this.startPos!.y;
+        this.dragLimit = this.dragLimit * this.startPos!.y + .2;
         
-        this.drag.addEventListener('dragStart', (e: any) => {
+        this.drag.addEventListener('dragStart', () => {
             this.tree!.dragged = true;
             this.dragged = true;
 
@@ -38,7 +53,6 @@ export class CottonPiece extends Behaviour {
         });
 
         this.drag.addEventListener('drag', (e: any) => {
-            let point = e.detail.point as Vector3;
             let delta = e.detail.delta as Vector3;
 
             if(!this.free) {
@@ -49,9 +63,13 @@ export class CottonPiece extends Behaviour {
                 this.tree!.setDelta(pos.clone());
     
                 if(delta.length() > this.dragLimit) {
+                    this.audio?.play('sounds/snap.mp3');
+                    
                     this.free = true;
                     this.tree?.snap();
                 }
+
+                CottonPiece.dragStrenght = 1;
             }
             else{
                 let bucketZ = this.bucket!.gameObject.position.z
@@ -65,8 +83,8 @@ export class CottonPiece extends Behaviour {
                 this.gameObject.position.z = bucketZ;
             }
         });
-           
-        this.drag.addEventListener('dragEnd', (e: any) => {
+
+        this.drag.addEventListener('dragEnd', () => {
             if(this.dragged && !this.free) {
                 this.tree?.snap();
                 this.dragged = false;
@@ -75,6 +93,24 @@ export class CottonPiece extends Behaviour {
                 this.drop();
             }
         });
+
+        window.addEventListener('reset', () => {
+            this.reset();
+        });
+    }
+
+    reset() {
+        this.free = false;
+        this.dragged = false;
+        
+        // @ts-ignore
+        this.gameObject.position.copy(this.initial!.pos);
+        // @ts-ignore
+        this.gameObject.rotation.copy(this.initial!.rot);
+
+        this.rigidbody!.isKinematic = true;
+
+        this.gameObject.activeSelf = true;
     }
 
     update(): void {
@@ -84,6 +120,15 @@ export class CottonPiece extends Behaviour {
         let b = this.tree!.bend(this.startPos!.clone());
         // @ts-ignore
         this.gameObject.position.copy(b.clone());
+
+        CottonPiece.dragStrenght -= this.context.time.deltaTime * 5.0;
+        
+        this.tree!.bendSound = CottonPiece.dragStrenght > 0;
+
+        // log delta
+        // console.log(this.lastPoint?.distanceTo(this.point!));
+
+        // this.lastPoint = this.point?.clone();
     }
 
     private drop() {
@@ -96,12 +141,14 @@ export class CottonPiece extends Behaviour {
     }
 
     public disable() {
-        this.rigidbody?.destroy()
-        this.gameObject.getComponent(MeshRenderer)?.destroy();
-        let col = this.gameObject.getComponent(BoxCollider);
-        // @ts-ignore
-        col!.size = new Vector3(0, 0, 0);
-        col?.destroy();
-        this.destroy();
+        this.gameObject.activeSelf = false;
+    }
+
+    onCollisionEnter(col: Collision) {
+        if(col.gameObject.name.includes('Ground')) {
+            this.audio!.volume = this.rigidbody!.getVelocity().length() * .4;
+            this.audio?.stop();
+            this.audio?.play('sounds/snap.mp3');
+        }
     }
 }

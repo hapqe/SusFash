@@ -64,6 +64,11 @@ function deleteUserData(req) {
     return __awaiter(this, void 0, void 0, function* () {
         let hash = (_a = req.fingerprint) === null || _a === void 0 ? void 0 : _a.hash;
         let path = `./users/${hash}.json`;
-        yield fs_1.default.promises.unlink(path);
+        try {
+            yield fs_1.default.promises.unlink(path);
+        }
+        catch (_b) {
+            console.log('User data not found');
+        }
     });
 }

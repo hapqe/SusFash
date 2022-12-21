@@ -24,6 +24,9 @@ export class MeshHandler extends Behaviour {
             this.setMesh();
             this.rayCast();
         });
+        window.addEventListener("pointerup", () => {
+            this.mousePoint = undefined;
+        });
         window.addEventListener("touchend", () => {
             this.mousePoint = undefined;
         });
@@ -59,7 +62,7 @@ export class MeshHandler extends Behaviour {
 
             geometry.setAttribute('position', new THREE.BufferAttribute(positionFloats, 3));
             geometry.setAttribute('uv', new THREE.BufferAttribute(uvFloats, 2));
-            geometry = mergeVertices(geometry);
+            // geometry = mergeVertices(geometry);
             geometry.computeVertexNormals();
 
             if (this.renderer.sharedMesh) {

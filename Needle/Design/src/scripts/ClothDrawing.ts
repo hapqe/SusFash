@@ -19,9 +19,9 @@ export class ClothDrawing extends Behaviour {
     start() {
         this.clear();
 
-        // window.addEventListener("pointerup", () => {
-        //     this.lastUv = undefined;
-        // });
+        window.addEventListener("pointerup", () => {
+            this.lastUv = undefined;
+        });
         window.addEventListener("touchend", () => {
             this.lastUv = undefined;
         });

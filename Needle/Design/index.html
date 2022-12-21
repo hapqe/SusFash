@@ -42,15 +42,15 @@
 
   <needle-engine></needle-engine>
 
-  <div class="fill">
+  <div class="abs">
     <div class="circle" onpointerdown="setTool(event)">
       <img id="tool" src="./svgs/Camera.svg" alt="">
     </div>
-    <div class="circle" onpointerdown="resetCloth(event)">
+    <div style="margin-left: 1rem" class="circle" onpointerdown="resetCloth(event)">
       <img src="./svgs/Reset.svg" alt="">
     </div>
   </div>
-  <div class="fill" style="right: 0; left: unset;">
+  <div class="abs" style="right: 0; left: unset;">
     <div class="circle" onpointerdown="submitCloth(event)">
       <img src="./svgs/Done.svg" alt="">
     </div>

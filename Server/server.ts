@@ -64,5 +64,10 @@ async function deleteUserData(req: Request) {
 
     let path = `./users/${hash}.json`;
 
-    await fs.promises.unlink(path);
+    try {
+        await fs.promises.unlink(path);
+    }
+    catch {
+        console.log('User data not found');
+    }
 }

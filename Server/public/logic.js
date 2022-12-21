@@ -25,7 +25,3 @@ const userData = async () => {
 function deleteUser() {
     post({ delete: true });
 }
-
-setTimeout(() => {
-    frame.src = "./cotton"
-}, 2000);

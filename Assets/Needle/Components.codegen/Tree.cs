@@ -13,11 +13,13 @@ namespace Needle.Typescript.GeneratedComponents
 		// public undefined @dragged; → Could not resolve C# type
 		public float @angle;
 		public void awake(){}
+		public void start(){}
 		public void update(){}
 		public void snap(){}
 		public void setAttractionPoint(UnityEngine.Vector3 @point){}
 		public void setDelta(UnityEngine.Vector3 @delta){}
 		public void disableAttraction(){}
+		public bool @bendSound;
 		public void bend(UnityEngine.Vector3 @position, float @angle){}
 	}
 }

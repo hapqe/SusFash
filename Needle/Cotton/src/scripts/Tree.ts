@@ -1,4 +1,4 @@
-import { Behaviour, MeshRenderer, Rigidbody } from '@needle-tools/engine';
+import { AudioSource, Behaviour, MeshRenderer, Rigidbody } from '@needle-tools/engine';
 import { Material, Vector3 } from 'three';
 import { lerp } from 'three/src/math/MathUtils';
 
@@ -13,6 +13,9 @@ export class Tree extends Behaviour {
     dragged = false;
     private _angle = 0;
     private _bend = 0;
+
+    private bendAudio?: AudioSource;
+    private audio?: AudioSource;
 
 
     set angle(value: number) {
@@ -34,10 +37,24 @@ export class Tree extends Behaviour {
     awake(): void {
         // @ts-ignore
         this.material = this.gameObject.getComponent(MeshRenderer)?.sharedMaterial;
+        [this.bendAudio, this.audio] = this.gameObject.getComponents(AudioSource);
         this.disableAttraction();
     }
 
+    start(): void {
+        this.bendAudio!.clip = 'sounds/tin.mp3';
+
+        window.addEventListener('reset', () => {
+            this.dragged = false;
+            this.angle = 0;
+        });
+    }
+
     update(): void {
+        this.bendAudio!.volume = this._bend;
+        if(this.bendAudio?.Sound)
+        this.bendAudio.Sound.detune = this._bend;
+        
         if(this.dragged) return;
 
         let w = this.windStrength * Math.sin(this.context.time.time * this.windSpeed);
@@ -58,6 +75,10 @@ export class Tree extends Behaviour {
     }
 
     snap() {
+        this.audio?.stop();
+        this.audio!.volume = this._bend;
+        this.audio?.play('sounds/spring.mp3');
+        
         this.disableAttraction();
         this.dragged = false;
         this.snapBackFactor = 0;
@@ -79,6 +100,17 @@ export class Tree extends Behaviour {
         if(this.material)
         // @ts-ignore
         this.material.uniforms._Attraction.value = new Vector3(0, 0, 1000);
+    }
+    
+    set bendSound(value: boolean) {
+        if(this.bendAudio) {
+            if(value) {
+                this.bendAudio.play();
+            }
+            else {
+                this.bendAudio.stop();
+            }
+        }
     }
     
     bend(position: Vector3, angle?: number) {

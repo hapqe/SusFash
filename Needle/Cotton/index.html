@@ -18,6 +18,7 @@
   <meta name="url" content="http://needle.tools">
 
   <link rel="stylesheet" href="./src/styles/style.css">
+  <link rel="stylesheet" href="./src/styles/fonts.css">
 </head>
 
 <body style="overflow: hidden;">
@@ -28,6 +29,32 @@
   <script type="module" src="./src/generated/gen.js"></script>
   <script type="module" src="./src/main.ts"></script>
 
+  <script>
+    function resetTree(e) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('reset', { detail: e }));
+    }
+    isMute = true;
+    function mute(e) {
+      e.preventDefault();
+      window.dispatchEvent(new CustomEvent('mute', { detail: e }));
+      document.getElementById('mute').src = isMute ? './svgs/Sound.svg' : './svgs/Mute.svg';
+      isMute = !isMute;
+    }
+  </script>
+
   <needle-engine style="background-color: #808080; overflow: hidden;"></needle-engine>
+
+  <div class="abs">
+    <div class="circle" onpointerdown="mute(event)">
+      <img id="mute" src="./svgs/Mute.svg" alt="">
+    </div>
+    <div class="circle">
+      <h3 id="score" style="font-weight: 500;">0/8</h3>
+    </div>
+    <div class="circle" onpointerdown="resetTree(event)">
+      <img src="./svgs/Reset.svg" alt="">
+    </div>
+  </div>
 </body>
 </html>
