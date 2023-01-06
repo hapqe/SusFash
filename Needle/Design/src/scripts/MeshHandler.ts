@@ -8,7 +8,7 @@ import { CircularBuffer } from "@needle-tools/engine/engine/engine_utils";
 import { getWorldPosition } from "@needle-tools/engine/engine/engine_three_utils";
 
 export class MeshHandler extends Behaviour {
-    private renderer?: MeshRenderer;
+    renderer?: MeshRenderer;
     private cloth?: Cloth;
 
     @serializeable(Object3D)

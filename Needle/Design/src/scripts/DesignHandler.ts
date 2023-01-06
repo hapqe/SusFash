@@ -1,6 +1,8 @@
 import { Behaviour, LookAtConstraint, MeshRenderer, OrbitControls, ParticleSystem, serializable, SkinnedMeshRenderer } from "@needle-tools/engine";
 import { lerp } from "three/src/math/MathUtils";
 import { Cloth } from "./Cloth";
+import * as THREE from "three";
+import { MeshHandler } from "./MeshHandler";
 
 export enum SelectedTool {
     Camera,
@@ -11,11 +13,12 @@ export enum SelectedTool {
 export class DesignHandler extends Behaviour {
     toolElement: HTMLImageElement | null = null;
     selectedTool = SelectedTool.Camera;
-    wrapper = document.getElementById("wrapper") as HTMLDivElement;
-    dim = document.getElementById("dim") as HTMLDivElement;
 
     @serializable(Cloth)
-    cloth: Cloth | null = null;
+    cloth?: Cloth;
+
+    @serializable(MeshHandler)
+    meshHandler?: MeshHandler;
 
     @serializable(OrbitControls)
     orbitControls: OrbitControls | null = null;
@@ -59,39 +62,39 @@ export class DesignHandler extends Behaviour {
             this.updateTool();
         })
         window.addEventListener("submitCloth", () => {
-            this.dim.style.opacity = '.8';
-            this.dim.style.pointerEvents = 'all';
-            fetch("./templates/test.html").then(res => res.text().then(text => { 
-                this.wrapper.innerHTML = text;
-                this.wrapper.querySelector("#back")!.addEventListener("click", () => {
-                    this.wrapper.innerHTML = "";
-                    this.dim.style.pointerEvents = 'none';
-                    this.dim.style.opacity = '0';
-                });
-                // let img = this.wrapper.querySelector("#cloth") as HTMLImageElement;
-                let allCanvases = document.querySelectorAll("canvas");
-                let canvas: HTMLCanvasElement;
-                for(let i = 0; i < allCanvases.length; i++){
-                    if(allCanvases[i].id == ""){
-                        canvas = allCanvases[i] as HTMLCanvasElement;
-                        break;
-                    }
-                }
-                // get canvas image and start download
-                let img = canvas!.toDataURL("image/png", 1.0);
-                let link = document.createElement('a');
-                link.download = 'image.png';
-
-                link.href = img;
-                link.click();
-            }));
+            this.submit();
         })
         window.addEventListener("resetCloth", () => {
             this.cloth?.setup();
             this.resetEffect?.play();
+            window.parent?.postMessage({woosh: true}, "*");
         })
 
         this.updateTool();
+    }
+
+    private submit() {
+        let submitCanvas = document.getElementById('submitCanvas') as HTMLCanvasElement;
+
+        let renderer = new THREE.WebGLRenderer({ canvas: submitCanvas, antialias: true, alpha: true });
+        renderer.setClearColor(0x000000, 0);
+        let scene = new THREE.Scene();
+        let camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+        camera.position.set(0, 0, 4);
+        let light = new THREE.DirectionalLight(0xeeeeff, .8);
+        light.position.set(0, 0, 1);
+        scene.add(light);
+        let clothMesh = this.meshHandler?.renderer?.sharedMesh;
+        // @ts-ignore   
+        let cloth = new THREE.Mesh(clothMesh?.geometry, clothMesh?.material);
+        cloth.position.set(-1.5, 1.5, 0);
+        cloth.scale.x = -1;
+        cloth.scale.multiplyScalar(3);
+        scene.add(cloth);
+        renderer.render(scene, camera);
+        
+        let data = submitCanvas.toDataURL("image/png");
+        window.parent?.postMessage({ design: data }, "*");
     }
 
     private updateTool() {
@@ -107,5 +110,7 @@ export class DesignHandler extends Behaviour {
         }
 
         this.toolElement!.src = `./svgs/${SelectedTool[this.selectedTool]}.svg`;
+
+        window.parent?.postMessage({click: true}, "*");
     }
 }

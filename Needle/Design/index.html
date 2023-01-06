@@ -37,6 +37,7 @@
     function submitCloth(e) {
       e.preventDefault();
       window.dispatchEvent(new CustomEvent('submitCloth', { detail: e }));
+      window.parent?.postMessage({click: true}, "*");
     }
   </script>
 
@@ -55,6 +56,7 @@
       <img src="./svgs/Done.svg" alt="">
     </div>
     <canvas id="clothColor" hidden color="white" width="200" height="200"></canvas>
+    <canvas id="submitCanvas" hidden color="white" width="200" height="200"></canvas>
   </div>
 </body>
 </html>

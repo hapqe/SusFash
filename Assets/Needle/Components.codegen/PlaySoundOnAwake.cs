@@ -5,12 +5,10 @@
 
 namespace Needle.Typescript.GeneratedComponents
 {
-	public partial class Mute : UnityEngine.MonoBehaviour
+	public partial class PlaySoundOnAwake : UnityEngine.MonoBehaviour
 	{
-		// public undefined @isMute; → Could not resolve C# type
-		public UnityEngine.AudioListener @listener;
+		public string @audio = "";
 		public void awake(){}
-		public void update(){}
 	}
 }
 

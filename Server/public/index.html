@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <title>Sustained Fashion</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="font.css">
@@ -13,7 +13,7 @@
 <body>
     <!-- <iframe id="frame" src="./dist/" frameborder="0"></iframe> -->
     <iframe id="frame" src="https://192.168.8.105:3000/" frameborder="0"></iframe>
-
+    
     <div class="fullscreen center-x">
         <span id="info" class="h-fit up t-md">
             <h5 class="center"><t class="ml-1 rainbow-text">Viel Spaß beim Spielen!</t> 
@@ -21,16 +21,38 @@
             </h5>
         </span>
     </div>
+    <div onclick="test()" class="fullscreen">
+        <button>Hey Hey Test</button>
+    </div>
     <div onclick="deleteUser()" class="fullscreen">
         <button>Hey Hey</button>
     </div>
-    <div id="woosh" class="fullscreen t-md" style="background-color: black; transform: translateX(-100%);">
+    <div id="woosh" class="fullscreen t-md" style="background-color: black; transform: translateX(-100%)">
+        
+    </div>
+    
+    <div class="fullscreen" id="info-page" style="display: none; opacity: 0;">
+        <div id="info-page-content">
 
+        </div>
+        <span id="info-page-title" style="position: fixed; top: 0; width: 100%;">
+            <h2 style="width: 100%;">
+                <img id="info-page-icon-left" src="svgs/arrow.svg" style="transform: rotate(-20deg);" alt="">
+                <t id="info-page-title-text">
+                    Replay
+                </t>
+                <img id="info-page-icon-right" src="svgs/post.svg" style="transform: rotate(20deg);" alt="">
+            </h2>
+        </span>
+        <span id="info-page-close" style="position: fixed; top: 0; left: 0">
+            <img id="close" src="svgs/x.svg" alt="" onclick="hideInfoPage()">
+        </span>
     </div>
 </body>
 
 <script src="./info.js"></script>
 <script src="./logic.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="./effects.js"></script>
 
 </html>

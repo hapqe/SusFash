@@ -78,6 +78,8 @@ export class Tree extends Behaviour {
         this.audio?.stop();
         this.audio!.volume = this._bend;
         this.audio?.play('sounds/spring.mp3');
+        console.log("played sound");
+        
         
         this.disableAttraction();
         this.dragged = false;

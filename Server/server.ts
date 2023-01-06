@@ -23,6 +23,10 @@ app.post('/', (req, res, next) => {
         deleteUserData(req);
         return;
     }
+    if(req.body.design) {
+        saveDesign(req);
+        return;
+    }
     
     userData(req, true);
     res.json({ status: 'ok' });
@@ -70,4 +74,22 @@ async function deleteUserData(req: Request) {
     catch {
         console.log('User data not found');
     }
+}
+
+async function saveDesign(req: Request) {
+    console.log("Saving designNNN");
+    
+    
+    let hash = req.fingerprint?.hash;
+    let time = Date.now() / 1000;
+    let name = `${hash}_${time}`;
+
+    let path = `./designs/${name}.png`;
+
+    // data:image
+    let data = req.body.design;
+
+    let buffer = Buffer.from(data.split(',')[1], 'base64');
+    
+    await fs.promises.writeFile(path, buffer);
 }

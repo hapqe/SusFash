@@ -82,6 +82,8 @@ export class Cloth extends Behaviour {
 
         window.addEventListener("pointerup", () => {
             this.lastUv = undefined;
+            window.parent?.postMessage({stopSpray: true}, "*");
+            window.parent?.postMessage({stopCut: true}, "*");
         });
     }
 
@@ -195,9 +197,12 @@ export class Cloth extends Behaviour {
                 s3.left = null;
             if (!s2.draw)
                 s3.left = null;
+
+            window.parent?.postMessage({startCut: true}, "*");
         }
         else if (this.drawing && this.context.input.mousePressed) {
             window.dispatchEvent(new CustomEvent("clothDraw", { detail: { uv } }));
+            window.parent?.postMessage({startSpray: true}, "*");
         }
         else {
             if (!s0.fixed) {

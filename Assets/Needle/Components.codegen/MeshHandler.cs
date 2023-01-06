@@ -7,6 +7,7 @@ namespace Needle.Typescript.GeneratedComponents
 {
 	public partial class MeshHandler : UnityEngine.MonoBehaviour
 	{
+		public UnityEngine.MeshRenderer @renderer;
 		public UnityEngine.Transform @positionTest;
 		public void awake(){}
 		public void start(){}
