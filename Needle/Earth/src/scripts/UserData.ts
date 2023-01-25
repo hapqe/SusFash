@@ -14,9 +14,10 @@ export class UserData extends Behaviour {
     }
 
     getData() {
-        window.parent.postMessage({ fetch: true}, "*");
+        window.parent.postMessage({ fetchData: true }, "*");
         window.addEventListener('message', (d: any) => {
-            window.dispatchEvent(new CustomEvent('userData', { detail: d.data }));
+            if (d.data.isUserData)
+                window.dispatchEvent(new CustomEvent('userData', { detail: d.data }));
         });
     }
 }

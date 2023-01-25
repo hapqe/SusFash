@@ -16,7 +16,6 @@ export class Indicator extends Behaviour {
                     this.disable();
                 }
             })
-            
         }
         
         let partices = this.gameObject.getComponentInChildren(ParticleSystem);
@@ -24,6 +23,7 @@ export class Indicator extends Behaviour {
         window.addEventListener("objectClick", (e: any) => {
             if(e.detail.collider.gameObject == this.gameObject) {
                 if(this.secret != "")
+                window.parent?.postMessage({collect: true}, "*");
                 window.parent?.postMessage({secret: this.secret}, "*");
 
                 partices!.enabled = true;

@@ -35,8 +35,28 @@ MonoBehaviour:
     Projects:
     - ProjectPath: Needle/Cotton
     BuilderScene: 
+  - Path: Assets/Scenes/Packaging.unity
+    Projects:
+    - ProjectPath: Needle/Packaging
+    BuilderScene: 
+  - Path: Assets/Scenes/Phone.unity
+    Projects:
+    - ProjectPath: Needle/Phone
+    BuilderScene: 
+  - Path: Assets/Scenes/Shopping.unity
+    Projects:
+    - ProjectPath: Needle/Shopping
+    BuilderScene: 
+  - Path: Assets/Scenes/Shipping.unity
+    Projects:
+    - ProjectPath: Needle/Template
+    BuilderScene: 
   Projects:
   - ProjectPath: Needle/Design
   - ProjectPath: Needle/Hub
   - ProjectPath: Needle/Earth
   - ProjectPath: Needle/Cotton
+  - ProjectPath: Needle/Packaging
+  - ProjectPath: Needle/Phone
+  - ProjectPath: Needle/Shopping
+  - ProjectPath: Needle/Template

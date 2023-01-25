@@ -21,8 +21,6 @@ function showInfo(info, duration = 5000) {
 }
 
 window.addEventListener('fullyLoaded', () => {
-    console.log("Fully loaded");
-    
     showInfo("Tippe auf Objekte in der Szene!", 10000);
 })
 

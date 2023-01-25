@@ -9,8 +9,11 @@ window.addEventListener('message', (e) => {
             [e.data.secret]: true
         });
     }
-    if(e.data.fetch) {
+    if(e.data.fetchData) {
         userData();
+    }
+    if(e.data.fetchDesign) {
+        getDesign();
     }
     if(e.data.design) {
         (async () => {
@@ -27,14 +30,27 @@ window.addEventListener('message', (e) => {
         })();
         
     }
+    if(e.data.collectCloth) {
+        post({
+            collectDesign: true,
+            id: e.data.id,
+            date: e.data.date,
+        });
+    }
 });
 
 window.post = function (data, url = "/") {
-    return fetch(url, { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+    return fetch(url, { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)});
 }
 
 const userData = async () => {
     let data = await fetch('/userData', { method: "get", headers: { 'Content-Type': 'application/json' } });
+    data = await data.json()
+    frame.contentWindow.postMessage(data, '*');
+};
+
+const getDesign = async () => {
+    let data = await fetch('/design', { method: "get", headers: { 'Content-Type': 'application/json' } });
     data = await data.json()
     frame.contentWindow.postMessage(data, '*');
 };

@@ -28,13 +28,16 @@ app.listen(port, () => {
 app.post('/', (req, res, next) => {
     if (req.body.delete) {
         deleteUserData(req);
-        return;
     }
-    if (req.body.design) {
+    else if (req.body.design) {
         saveDesign(req);
-        return;
     }
-    userData(req, true);
+    else if (req.body.collectDesign) {
+        incrementDesign(req);
+    }
+    else {
+        userData(req, true);
+    }
     res.json({ status: 'ok' });
     next();
 });
@@ -60,7 +63,7 @@ function userData(req, upload = false) {
             json = Object.assign(Object.assign({}, json), req.body);
             yield fs_1.default.promises.writeFile(path, JSON.stringify(json));
         }
-        return json;
+        return Object.assign({ isUserData: true }, json);
     });
 }
 function deleteUserData(req) {
@@ -76,12 +79,39 @@ function deleteUserData(req) {
         }
     });
 }
+function incrementDesign(req, buy = true) {
+    var _a, _b, _c;
+    return __awaiter(this, void 0, void 0, function* () {
+        let path = `./users/${req.body.id}.json`;
+        let name = req.body.date;
+        let json;
+        try {
+            json = JSON.parse(yield fs_1.default.promises.readFile(path, 'utf8'));
+            const count = (_c = ((_b = (_a = json.designs) === null || _a === void 0 ? void 0 : _a[name]) === null || _b === void 0 ? void 0 : _b.buyCount)) !== null && _c !== void 0 ? _c : 0;
+            if (count == 0) {
+                json.designs[name] = Object.assign(Object.assign({}, json.designs[name]), { buyCount: 1 });
+            }
+            else {
+                json.designs[name] = Object.assign(Object.assign({}, json.designs[name]), { buyCount: count + 1 });
+            }
+        }
+        catch (_d) {
+            json = {
+                designs: {
+                    [name]: {
+                        buyCount: 1,
+                    }
+                }
+            };
+        }
+        yield fs_1.default.promises.writeFile(path, JSON.stringify(json));
+    });
+}
 function saveDesign(req) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("Saving designNNN");
         let hash = (_a = req.fingerprint) === null || _a === void 0 ? void 0 : _a.hash;
-        let time = Date.now() / 1000;
+        let time = Date.now();
         let name = `${hash}_${time}`;
         let path = `./designs/${name}.png`;
         // data:image
@@ -90,3 +120,20 @@ function saveDesign(req) {
         yield fs_1.default.promises.writeFile(path, buffer);
     });
 }
+function getDesign() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const designs = yield fs_1.default.promises.readdir('./designs');
+        const count = designs.length;
+        let index = Math.floor(Math.random() * count);
+        let path = `./designs/${designs[index]}`;
+        let data = yield fs_1.default.promises.readFile(path, 'base64');
+        return {
+            isDesign: true,
+            design: `data:image/png;base64,${data}`,
+            stamp: designs[index]
+        };
+    });
+}
+app.get('/design', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    getDesign().then(d => res.send(d));
+}));

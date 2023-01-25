@@ -11,7 +11,6 @@ export class Mute extends Behaviour {
         AudioSource.registerWaitForAllowAudio(() => {
             // play test audio
             const audio = this.context.mainCameraComponent?.gameObject.getComponent(AudioSource)
-            audio?.play("sounds/tin.mp3");
         });
 
         window.addEventListener('mute', () => {

@@ -78,7 +78,6 @@ export class Tree extends Behaviour {
         this.audio?.stop();
         this.audio!.volume = this._bend;
         this.audio?.play('sounds/spring.mp3');
-        console.log("played sound");
         
         
         this.disableAttraction();
@@ -106,12 +105,12 @@ export class Tree extends Behaviour {
     
     set bendSound(value: boolean) {
         if(this.bendAudio) {
-            if(value) {
-                this.bendAudio.play();
-            }
-            else {
-                this.bendAudio.stop();
-            }
+            // if(value) {
+            //     this.bendAudio.play();
+            // }
+            // else {
+            //     this.bendAudio.stop();
+            // }
         }
     }
     
