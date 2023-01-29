@@ -1,4 +1,4 @@
-import { AssetReference, Behaviour, serializable } from '@needle-tools/engine';
+import { Animator, AssetReference, Behaviour, findObjectOfType, ParticleSystem, serializable } from '@needle-tools/engine';
 import { Euler, Object3D, Quaternion } from 'three';
 
 export class PackagingHandler extends Behaviour {
@@ -7,6 +7,13 @@ export class PackagingHandler extends Behaviour {
 
     @serializable(Object3D)
     spawnPosition?: Object3D;
+
+    @serializable(Animator)
+    effect?: Animator;
+
+    private score = document.getElementById('score');
+    private max = 12;
+    private count = 0;
 
     async awake() {
         await this.packagePrefab?.loadAssetAsync();
@@ -28,5 +35,18 @@ export class PackagingHandler extends Behaviour {
             yield;
         }
         this.startCoroutine(this.spawnPackage());
+    }
+
+    public collect() {
+        findObjectOfType(ParticleSystem, this.context, false)!.play();
+        this.effect?.SetTrigger('collect');
+        window.parent?.postMessage({magic: true}, "*");
+        window.parent?.postMessage({coin: true}, "*");
+
+        this.score!.innerText = `${Math.min(++this.count, this.max)}/${this.max}`;
+
+        if(this.count == this.max) {
+            console.log("NEXT");
+        }
     }
 }

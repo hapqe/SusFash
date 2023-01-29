@@ -8,6 +8,7 @@ namespace Needle.Typescript.GeneratedComponents
 	public partial class PlaySoundOnAwake : UnityEngine.MonoBehaviour
 	{
 		public string @audio = "";
+		public bool @fade = false;
 		public void awake(){}
 	}
 }

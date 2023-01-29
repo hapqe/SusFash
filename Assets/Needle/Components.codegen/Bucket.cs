@@ -10,7 +10,6 @@ namespace Needle.Typescript.GeneratedComponents
 		// public undefined @count; → Could not resolve C# type
 		public UnityEngine.Animator @animator;
 		public UnityEngine.ParticleSystem @particles;
-		public UnityEngine.AudioSource @audio;
 		// public undefined @score; → Could not resolve C# type
 		// public undefined @max; → Could not resolve C# type
 		public void awake(){}

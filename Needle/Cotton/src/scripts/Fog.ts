@@ -7,5 +7,8 @@ export class Fog extends Behaviour {
         let scene = this.context.scene;
         // @ts-ignore
         scene.fog = new THREE.FogExp2(0x808080, .2);
+
+        let canvas = document.querySelector('needle-engine') as HTMLElement;
+        canvas.style.background = '#808080';
     }
 }

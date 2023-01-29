@@ -10,9 +10,14 @@ body {
     touch-action: none;
 }
 
+.m-0 {
+    margin: 0;
+}
+
 @media screen and (min-width: 800px) {
     body {
-        overflow: hidden;
+        overflow-y: hidden;
+        height: 100vh;
     }
 }
 
@@ -33,13 +38,17 @@ iframe {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: var(--screen-width);
+    height: var(--screen-height);
     pointer-events: none;
 }
 
 .fullscreen>* {
     pointer-events: auto;
+}
+
+.bg-black {
+    background-color: black;
 }
 
 .center {
@@ -257,4 +266,99 @@ button {
 }
 #text[data-blur="false"] div {
     filter: blur(0px) drop-shadow(0 0 .2rem rgb(0, 0, 0, 0.47));
+}
+
+@keyframes star {
+    0% {
+        transform: scale(0);
+    }
+    20% {
+        transform: scale(1.1);
+    }
+    40% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(100);
+    }
+}
+
+#star {
+    transform: scale(0);
+    animation-fill-mode: forwards;
+}
+
+#star-wrapper {
+    overflow: hidden;
+}
+
+@keyframes title-text {
+    0% {
+        letter-spacing: 10px;
+        filter: blur(10px);
+    }
+    100% {
+        letter-spacing: 5px;
+        filter: blur(0);
+    }
+}
+
+@keyframes title-wrapper {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+}
+
+#title {
+    animation: title-wrapper 1s ease-in-out;
+    animation-fill-mode: forwards;
+    animation-delay: 4s;
+    overflow: hidden;
+}
+
+#title h1 {
+    animation: title-text 3s ease-in-out;
+    animation-fill-mode: forwards;
+    white-space: nowrap;
+}
+
+.no-interactions {
+    pointer-events: none;
+    user-select: none;
+}
+
+#clouds {
+    transition: 1s ease-in-out;
+    background-color: #0000;
+    overflow: hidden;
+}
+
+#clouds.show {
+    background-color: #fff;
+}
+
+#clouds.show :nth-child(1) {
+    transform: scaleX(2) translateX(-25%);
+}
+
+#clouds.show :nth-child(2) {
+    transform: scaleX(-2) scaleY(-1) translateX(-25%) translateY(100%);
+}
+
+#clouds :nth-child(2) {
+    transition: 1s ease-in-out;
+    transform: scaleX(-1) scaleY(-1) translateY(100%) translateX(100%);
+}
+
+#clouds :nth-child(1) {
+    transition: 1s ease-in-out;
+    transform: translateX(100%);
+}
+
+.round {
+    border-radius: 50em;
 }

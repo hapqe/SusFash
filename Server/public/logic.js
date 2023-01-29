@@ -28,7 +28,6 @@ window.addEventListener('message', (e) => {
             design = e.data.design;
             showInfoPage();
         })();
-        
     }
     if(e.data.collectCloth) {
         post({

@@ -1,5 +1,7 @@
 import { Behaviour, Collision, findObjectOfType, ParticleSystem, Rigidbody } from '@needle-tools/engine';
 import { ICollider } from '@needle-tools/engine/engine/engine_types';
+import { tryFindObject } from '@needle-tools/engine/engine/engine_utils';
+import { PackagingHandler } from './PackagingHandler';
 
 export class Package extends Behaviour {
     private rigidBody?: Rigidbody;
@@ -24,9 +26,8 @@ export class Package extends Behaviour {
     
     onTriggerEnter(col: ICollider) {
         if (col.gameObject.name === 'Truck') {
-            findObjectOfType(ParticleSystem, this.context, false)!.play();
-            this.destroy();
-            window.parent?.postMessage({magic: true}, "*");
+            findObjectOfType(PackagingHandler, this.context, false)!.collect();
+            this.gameObject.activeSelf = false;
         }
     }
 }

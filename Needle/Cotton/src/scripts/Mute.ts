@@ -15,7 +15,6 @@ export class Mute extends Behaviour {
 
         window.addEventListener('mute', () => {
             this.isMute = !this.isMute;
-            console.log(this.isMute);
             // this.listener?.listener.setMasterVolume(this.isMute ? 0 : 1);
         });
 

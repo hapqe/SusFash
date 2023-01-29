@@ -6,7 +6,6 @@ export class Bucket extends Behaviour {
     count = 0;
     animator?: Animator;
     particles?: ParticleSystem;
-    audio?: AudioSource;
 
     score = document.getElementById('score');
     max = 0;
@@ -17,8 +16,6 @@ export class Bucket extends Behaviour {
         this.animator = this.gameObject.getComponent(Animator)!;
         this.particles = this.gameObject.getComponentInChildren(ParticleSystem)!;
         this.particles.stop();
-
-        this.audio = this.gameObject.addNewComponent(AudioSource)!;
 
         window.addEventListener('reset', () => {
             window.parent?.postMessage({woosh: true}, "*");
@@ -32,9 +29,12 @@ export class Bucket extends Behaviour {
         let piece = col.gameObject.getComponent(CottonPiece);
         piece?.disable();
         this.score!.innerText = `${Math.min(++this.count, this.max)}/${this.max}`;
+
+        if(this.count == this.max) {
+            console.log("NEXT");
+        }
         
-        this.audio?.stop();
-        this.audio?.play('sounds/score.mp3');
+        window.parent?.postMessage({score: true}, "*");
         
         this.animator?.SetTrigger('effect');
         this.particles?.play();

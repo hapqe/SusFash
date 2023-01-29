@@ -517,7 +517,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   particles: {fileID: 0}
-  audio: {fileID: 0}
 --- !u!65 &519939400
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5801,7 +5800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784234922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.35, y: 2.07, z: -0.17}
+  m_LocalPosition: {x: 0.35, y: 2.05, z: -0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6021,6 +6020,8 @@ GameObject:
   - component: {fileID: 1597275518}
   - component: {fileID: 1597275519}
   - component: {fileID: 1597275520}
+  - component: {fileID: 1597275521}
+  - component: {fileID: 1597275522}
   m_Layer: 0
   m_Name: SceneRoot
   m_TagString: Untagged
@@ -6082,6 +6083,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Needle.Engine.Components.ObjectRaycaster, Needle.Engine
     $ GlobalObjectId_V1-2-49068307165cdb346a242c48a6528235-1597275520-0
+--- !u!114 &1597275521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597275517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a91a191bd51c38dd21832d21f62d8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio: wind
+  fade: 1
+--- !u!114 &1597275522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597275517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b60d1b828230146b5da8a1ae2eb6fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1609064305
 GameObject:
   m_ObjectHideFlags: 0

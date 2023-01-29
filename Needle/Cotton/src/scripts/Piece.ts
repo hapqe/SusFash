@@ -20,8 +20,6 @@ export class CottonPiece extends Behaviour {
 
     private static dragStrenght = 1;
 
-    private audio?: AudioSource;
-
     private initial?: { pos: Vector3, rot: Vector3 };
     
     start(): void {
@@ -36,8 +34,6 @@ export class CottonPiece extends Behaviour {
         this.drag = this.gameObject.getComponent(DragAble)!;
         this.tree = findObjectOfType(Tree, this.context, true);
         this.bucket = findObjectOfType(Bucket, this.context, true);
-
-        this.audio = this.gameObject.addNewComponent(AudioSource)!;
 
         // @ts-ignore
         this.startPos = this.gameObject.position.clone();
@@ -63,7 +59,7 @@ export class CottonPiece extends Behaviour {
                 this.tree!.setDelta(pos.clone());
     
                 if(delta.length() > this.dragLimit) {
-                    this.audio?.play('sounds/snap.mp3');
+                    // window.parent?.postMessage({snap: true}, "*");
                     
                     this.free = true;
                     this.tree?.snap();
@@ -146,9 +142,7 @@ export class CottonPiece extends Behaviour {
 
     onCollisionEnter(col: Collision) {
         if(col.gameObject.name.includes('Ground')) {
-            this.audio!.volume = this.rigidbody!.getVelocity().length() * .4;
-            this.audio?.stop();
-            this.audio?.play('sounds/snap.mp3');
+            // window.parent?.postMessage({snap: true}, "*");
         }
     }
 }

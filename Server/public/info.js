@@ -1,4 +1,5 @@
 let isInfoOpen = false;
+const infoElement = document.getElementById('info');
 
 function showAchievement(name, duration = 5000) {
     showInfo(`Errungenschaft "<r>${name}</r>" freigeschaltet!`, duration);
@@ -9,8 +10,7 @@ function showSecret(name, duration = 5000) {
 }
 
 function showInfo(info, duration = 5000) {
-    const infoElement = document.getElementById('info');
-    
+
     isInfoOpen = true;
     infoElement.querySelector('h5 t').innerHTML = info;
     infoElement.classList.remove("up");
