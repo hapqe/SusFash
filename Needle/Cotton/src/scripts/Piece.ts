@@ -59,8 +59,6 @@ export class CottonPiece extends Behaviour {
                 this.tree!.setDelta(pos.clone());
     
                 if(delta.length() > this.dragLimit) {
-                    // window.parent?.postMessage({snap: true}, "*");
-                    
                     this.free = true;
                     this.tree?.snap();
                 }
@@ -119,8 +117,6 @@ export class CottonPiece extends Behaviour {
 
         CottonPiece.dragStrenght -= this.context.time.deltaTime * 5.0;
         
-        this.tree!.bendSound = CottonPiece.dragStrenght > 0;
-
         // log delta
         // console.log(this.lastPoint?.distanceTo(this.point!));
 
@@ -138,11 +134,5 @@ export class CottonPiece extends Behaviour {
 
     public disable() {
         this.gameObject.activeSelf = false;
-    }
-
-    onCollisionEnter(col: Collision) {
-        if(col.gameObject.name.includes('Ground')) {
-            // window.parent?.postMessage({snap: true}, "*");
-        }
     }
 }

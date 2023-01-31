@@ -17,32 +17,64 @@ window.addEventListener('message', (e) => {
     if(e.data.transition) {
         transition();
     }
+
+    if(e.data.flash) {
+        flash();
+    }
+
+    if(e.data.rainbow || e.data.playcollect) {
+        rainbow();
+    }
+
+    if(e.data.darken) {
+        darken();
+    }
 });
 
 let playing = new Map();
 
 function playSound(k) {
-    console.log(k);
-    
-    audio[k]?.play();
-
-    // if k starts with start, play audio
-    if (k.startsWith('start')) {
-        audio[k.slice(5).toLocaleLowerCase()]?.play();
+    if(k.startsWith('stop')) {
+        const s = slice(k);
+        playing.get(s)?.pause();
+        playing.get('c_' + s)?.pause();
+        playing.delete(s);
     }
-    // if k starts with stop, pause audio
-    if (k.startsWith('stop')) {
-        audio[k.slice(4).toLocaleLowerCase()]?.pause();
-        audio[k.slice(4).toLocaleLowerCase() + 'Copy']?.pause();
+    if(k.startsWith('loop')) {
+        const s = slice(k);
+        play(s);
     }
-    // if k starts with loop, loop audio
-    if (k.startsWith('fade')) {
-        const s = k.slice(4).toLocaleLowerCase();
-        audio[s]?.play();
+    if(k.startsWith('play')) {
+            const s = slice(k);
+        play(s);
+    }
+    if(k.startsWith('fade')) {
+        const s = slice(k);
+        const a = play(s, true);
+        const on = () => {
+            setTimeout(() => {
+                play('c_' + s, true);
+            }, a.duration * 500);
+            a.removeEventListener('canplaythrough', on);
+        };
         
-        setTimeout(() => {
-            audio[s + 'Copy'].play();
-        }, audio[s].duration * 500);
+        a.addEventListener('canplaythrough', on);
+    }
+
+    function slice(k) {
+        return k.slice(4).toLocaleLowerCase();
+    }
+
+    function play(k, l = false) {
+        let a = new Audio();
+        a.loop = l;
+        a.src = `./sounds/${k}.mp3`;
+        a.load();
+        a.addEventListener('canplaythrough', () => {
+            a.play();
+        });
+        playing.set(k, a);
+        return a;
     }
 }
 
@@ -50,51 +82,44 @@ function test() {
     frame.contentWindow.postMessage({test: true}, '*');
 }
 
-function blink() {
-    // play animation
-    document.querySelector('#blink').classList.add('blink');
+async function blink() {
+    const c = document.querySelector('#blink').classList;
+    c.add('blink');
+    c.remove('flash');
+    c.remove('rainbow-flash');
+    c.remove('darken');
+    
+    await new Promise((resolve) => setTimeout(resolve, 1400));
 }
 
-const audio = {
-    w: new Audio('./sounds/woosh.mp3'),
-    click: new Audio('./sounds/click.mp3'),
-    spray: new Audio('./sounds/spray.mp3'),
-    splash: new Audio('./sounds/splash.mp3'),
-    cut: new Audio('./sounds/cut.mp3'),
-    music: new Audio('./sounds/music.mp3'),
-    space: new Audio('./sounds/space.mp3'),
-    collect: new Audio('./sounds/collect.mp3'),
-    typing: new Audio('./sounds/typing.mp3'),
-    bing: new Audio('./sounds/bing.mp3'),
-    radar: new Audio('./sounds/radar.mp3'),
-    shopping: new Audio('./sounds/shopping.mp3'),
-    coin: new Audio('./sounds/coin.mp3'),
-    magic: new Audio('./sounds/magic.mp3'),
-    conveyor: new Audio('./sounds/conveyor.mp3'),
-    haunted: new Audio('./sounds/haunted.mp3'),
-    spring: new Audio('./sounds/spring.mp3'),
-    score: new Audio('./sounds/score.mp3'),
-    snap: new Audio('./sounds/snap.mp3'),
-    mine: new Audio('./sounds/mine.mp3'),
-    wind: new Audio('./sounds/wind.mp3'),
-    complete: new Audio('./sounds/complete.mp3'),
-    bubble: new Audio('./sounds/bubble.mp3'),
-    tornado: new Audio('./sounds/tornado.mp3'),
-    piano: new Audio('./sounds/piano.mp3'),
+async function darken() {
+    const c = document.querySelector('#blink').classList;
+    c.add('darken');
+    c.remove('flash');
+    c.remove('rainbow-flash');
+    c.remove('blink');
+    
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 }
-audio.spray.loop = true;
-audio.music.loop = true;
-audio.space.loop = true;
-audio.typing.loop = true;
-audio.shopping.loop = true;
-audio.conveyor.loop = true;
-audio.haunted.loop = true;
-audio.mine.loop = true;
-audio.wind.loop = true;
-audio.piano.loop = true;
 
-for (const key in audio) {
-    audio[key + 'Copy'] = audio[key].cloneNode();
+async function flash() {
+    const c = document.querySelector('#blink').classList;
+    c.add('flash');
+    c.remove('darken');
+    c.remove('rainbow-flash');
+    c.remove('blink');
+    
+    await new Promise((resolve) => setTimeout(resolve, 500));
+}
+
+async function rainbow() {
+    const c = document.querySelector('#blink').classList;
+    c.add('rainbow-flash');
+    c.remove('flash');
+    c.remove('darken');
+    c.remove('blink');
+
+    await new Promise((resolve) => setTimeout(resolve, 500));
 }
 
 function woosh() {
@@ -107,23 +132,25 @@ function woosh() {
         woosh.style.transform = 'translateX(-100%)';
     }
 
-    audio.w.play();
+    playSound('playwoosh');
 }
 
-function transition() {
-    audio.complete.play();
+async function transition() {
+    playSound('playcomplete')
     
     let s = document.getElementById('star')
-    s.style.animation = 'star 1s';
+    s.style.animation = 'star 1s forwards';
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 }
 
 function hideTransition() {
     let s = document.getElementById('star')
-    s.style.animation = 'none';
+    s.style.animation = 'fade 1s forwards';
 }
 
 async function clouds() {
-    playSound('tornado')
+    playSound('playtornado')
     let c = document.getElementById('clouds');
     c.classList.add('show');
     
@@ -134,7 +161,3 @@ function hideClouds() {
     let c = document.getElementById('clouds');
     c.classList.remove('show');
 }
-
-setTimeout(() => {
-    clouds()
-}, 2et0000);

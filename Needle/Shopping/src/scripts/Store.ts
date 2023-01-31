@@ -1,20 +1,52 @@
-import { addNewComponent, AssetReference, Behaviour, findObjectOfType, FrameEvent, getComponent, MeshRenderer, ParticleSystem, removeComponent, serializable } from '@needle-tools/engine';
-import { MeshBasicMaterial, Texture, TextureLoader } from 'three';
+import { addNewComponent, AssetReference, Behaviour, findObjectOfType, FrameEvent, GameObject, getComponent, MeshRenderer, ParticleSystem, removeComponent, serializable } from '@needle-tools/engine';
+import { LuminanceFormat, MeshBasicMaterial, Texture, TextureLoader } from 'three';
 import * as THREE from 'three';
 import { ShoppingCloth } from './ShoppingCloth';
-import { ICollider } from '@needle-tools/engine/engine/engine_types';
+import { ICollider, IGameObject } from '@needle-tools/engine/engine/engine_types';
 import { ShoppingHandler } from './ShoppingHandler';
+import { PlayerController } from './PlayerController';
+import { ShoppingParticles } from './ShoppingParticles';
 
 export class Store extends Behaviour {
+    handler?: ShoppingHandler;
+    
+    @serializable(MeshRenderer)
     clothRenderer?: MeshRenderer;
+
     designName: string = "";
     collected = false;
-        
+
+    @serializable(GameObject)
+    specialObject?: GameObject;
+    
+    @serializable(GameObject)
+    glowObject?: GameObject;
+
+    @serializable(GameObject)
+    checkObject?: GameObject;
+
+    special = false;
+
+    particles?: ShoppingParticles;
+
+    map?: THREE.Texture;
+
     start() {
+        this.particles = findObjectOfType(ShoppingParticles, this.context, false);
+        
         const cloth = this.gameObject!.getComponentInChildren(ShoppingCloth);
-        this.clothRenderer = cloth!.gameObject.getComponent(MeshRenderer)!;
+
+        this.handler = findObjectOfType(ShoppingHandler, this.context, false) as ShoppingHandler;
         
         this.randomize();
+
+        const specialChange = .3;
+
+        if(Math.random() < specialChange) {
+            this.special = true;
+            this.specialObject!.activeSelf = true;
+            this.glowObject!.activeSelf = true;
+        }
     }
 
     randomize() {
@@ -32,6 +64,8 @@ export class Store extends Behaviour {
                 map.offset.set(1, 1);
                 map.needsUpdate = true;
 
+                this.map = map;
+
                 const mat = new THREE.MeshBasicMaterial({map, transparent: true, opacity: 0});
 
                 // @ts-ignore
@@ -42,15 +76,43 @@ export class Store extends Behaviour {
         });
     }
 
-    collect() {
-        const particles = findObjectOfType(ParticleSystem, this.context, false) as ParticleSystem;
-        particles.play();
-        
+    playPartices() {
+        const prev = this.particles!.system.emission.rateOverTime.constant;
+
+        this.particles!.system.emission.rateOverTime.constant = this.special ? 10000 : 1000;
+
+        setTimeout(() => {
+            this.particles!.system.emission.rateOverTime.constant = prev;
+        }, 100);
+    }
+    
+    collect(p: IGameObject) {
         if(!this.collected && this.designName != "") {
-            window.parent?.postMessage({coin: true}, "*");
-            window.parent?.postMessage({magic: true}, "*");
+            const player = getComponent(p, PlayerController) as PlayerController;
+            player.setTexture(this.map!);
             
+            this.checkObject!.activeSelf = true;
+            
+            if(!this.special) 
+                window.parent?.postMessage({flash: true}, "*");
+
+            this.playPartices();
+
             this.collected = true;
+            
+            this.handler!.coolness += .2;
+            
+            window.parent?.postMessage({playcoin: true}, "*");
+            window.parent?.postMessage({playmagic: true}, "*");
+
+            if(this.special) {
+                window.parent?.postMessage({playcollect: true}, "*");
+                window.dispatchEvent(new CustomEvent("specialCollected"));
+                
+                this.glowObject!.activeSelf = false;
+            }
+            
+            window.dispatchEvent(new CustomEvent("storeCollected"));
             
             let [id, date] = this.designName.split("_");
             date = date.slice(0, -4);
@@ -60,7 +122,7 @@ export class Store extends Behaviour {
 
     onTriggerEnter(col: ICollider) {
         if(col.gameObject.name == "Player") {
-            this.collect();
+            this.collect(col.gameObject);
         }
     }
 

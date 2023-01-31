@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7a91a191bd51c38dd21832d21f62d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audio: space
+  audio: loopspace
   fade: 0
 --- !u!1 &284856214
 GameObject:

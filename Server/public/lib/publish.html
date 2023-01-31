@@ -10,7 +10,15 @@
         Wenn du auf “Ja” tippst wird dein Design veröffentlicht. Andere Spieler werden es sehen können.
     </h6>
     <div id="accept" class="fill center">
-        <button onclick="post({design: design})" style="
+        <button id="submit-button" onclick="{
+            hideInfoPage();
+            
+            document.getElementById('submit-button').disabled = true;
+            
+            window.parent.postMessage({done: true});
+            window.parent.postMessage({packagingScene: true});
+            post({design: design});
+        }" style="
         height: min-content;
         padding-left: 1em;
         padding-right: 1em;

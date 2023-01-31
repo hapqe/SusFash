@@ -1,4 +1,4 @@
-import { AssetReference, Behaviour, BoxCollider, GameObject, instantiate, isActiveSelf, ParticleSystem, Renderer, Rigidbody, serializable, setActive } from '@needle-tools/engine';
+import { AssetReference, Behaviour, BoxCollider, findObjectOfType, GameObject, instantiate, isActiveSelf, ParticleSystem, Renderer, Rigidbody, serializable, setActive } from '@needle-tools/engine';
 import { Physics } from '@needle-tools/engine/engine/engine_physics';
 import { Object3D, Vector2, Vector3 } from 'three';
 import { Escalator } from './Escalator';
@@ -6,6 +6,20 @@ import { PlayerController } from './PlayerController';
 import { Store } from './Store';
 
 export class ShoppingHandler extends Behaviour {
+    shirtCount = 0;
+
+    over = false;
+    
+    gameover() {
+        if(this.over) return;
+        this.over = true;
+        
+        findObjectOfType(PlayerController, this.context, false)!.enabled = false;
+        window.parent.postMessage({shirtCount: this.shirtCount || 5}, "*");
+        window.parent.postMessage({done: true}, "*");
+        window.parent.postMessage({phoneScene: true}, "*");
+    }
+
     @serializable(AssetReference)
     store?: AssetReference;
 
@@ -23,6 +37,26 @@ export class ShoppingHandler extends Behaviour {
     spawnRange: number = 0;
     escalatorChance: number = 0;
 
+    isSpeacial = false;
+    
+    coolnessDropping = false;
+    _coolness = .2;
+
+    get coolness() {
+        return this._coolness;
+    }
+
+    set coolness(v: number) {
+        v = Math.max(0, Math.min(1, v));
+
+        if(v === 0) this.gameover();
+        
+        if(v === 1) this.coolnessDropping = true;
+        
+        this._coolness = v;
+        document.getElementById('meter')!.style.width = `calc(${v * 100}% - .25em)`;
+    }
+
     awake(): void {
         this.store?.loadAssetAsync();
         
@@ -31,12 +65,32 @@ export class ShoppingHandler extends Behaviour {
                 this.spawn();
             }
         })
+
+        setTimeout(() => {
+            this.gameover();
+        },3000);
     }
 
     start() {
         requestAnimationFrame(() => this.refresh());
 
-        window.parent?.postMessage({shopping: true}, "*");
+        window.addEventListener('specialCollected', () => {
+            const c = document.getElementById('meter')!.classList;
+            c.add('rainbow');
+            
+            this.isSpeacial = true; 
+            
+            setTimeout(() => {
+                this.isSpeacial = false;
+                c.remove('rainbow');
+            }, 3000);
+        });
+
+        window.addEventListener('storeCollected', () => {
+            this.playerController?.particles.play();
+            this.shirtCount++;
+        });
+            
     }
     
     async refresh() {
@@ -73,8 +127,15 @@ export class ShoppingHandler extends Behaviour {
         requestAnimationFrame(() => this.refresh());
     }
 
+    dropSpeed = .05;
+    
     update(): void {
         this.setColliders();
+
+        this.coolness -= this.context.time.deltaTime * (this.coolnessDropping && !this.isSpeacial ? this.dropSpeed : 0);
+
+        if(this.coolnessDropping && !this.isSpeacial)
+        this.dropSpeed += this.context.time.deltaTime * .001;
     }
 
     private async spawn(pos: Vector3 = new Vector3(0, 0, 0)) {

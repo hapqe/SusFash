@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: -6465566751694194690, guid: f9904b59c222c304298ecd550bcff608,
+  m_Shader: {fileID: -6465566751694194690, guid: 836818233be26bf44b212630acc6d384,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -72,6 +72,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_1dc9098b6a4a46a6a2145915a02b507d_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 52304e61912538f4b871e73af5faa27b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_4dabb306b2e24cf6a05fa260f2a53a6e_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 483864c827434bd49bd76a76036fcc3f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_8518a3f4ab1a44ceaf1dee13f8aa500d_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 52304e61912538f4b871e73af5faa27b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:

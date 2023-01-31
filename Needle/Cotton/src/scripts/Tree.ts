@@ -64,7 +64,7 @@ export class Tree extends Behaviour {
     }
 
     snap() {
-        // window.parent?.postMessage({spring: true}, "*");
+        window.parent?.postMessage({playspring: true}, "*");
         
         this.disableAttraction();
         this.dragged = false;
@@ -87,17 +87,6 @@ export class Tree extends Behaviour {
         if(this.material)
         // @ts-ignore
         this.material.uniforms._Attraction.value = new Vector3(0, 0, 1000);
-    }
-    
-    set bendSound(value: boolean) {
-        // if(this.bendAudio) {
-        //     // if(value) {
-        //     //     this.bendAudio.play();
-        //     // }
-        //     // else {
-        //     //     this.bendAudio.stop();
-        //     // }
-        // }
     }
     
     bend(position: Vector3, angle?: number) {

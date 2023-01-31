@@ -26,7 +26,7 @@ export class PackagingHandler extends Behaviour {
     }
 
     *spawnPackage() {
-        const interval = 3;
+        const interval = 1;
         let t = this.context.time.time;
         const rot = new Quaternion().setFromEuler(new Euler(0, Math.random() * Math.PI * 2, 0));
         // @ts-ignore
@@ -40,13 +40,14 @@ export class PackagingHandler extends Behaviour {
     public collect() {
         findObjectOfType(ParticleSystem, this.context, false)!.play();
         this.effect?.SetTrigger('collect');
-        window.parent?.postMessage({magic: true}, "*");
-        window.parent?.postMessage({coin: true}, "*");
+        window.parent?.postMessage({playmagic: true}, "*");
+        window.parent?.postMessage({playcoin: true}, "*");
 
         this.score!.innerText = `${Math.min(++this.count, this.max)}/${this.max}`;
 
         if(this.count == this.max) {
-            console.log("NEXT");
+            window.parent?.postMessage({next: true}, "*");
+            window.parent?.postMessage({shippingScene: true}, "*");
         }
     }
 }

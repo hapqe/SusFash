@@ -6020,7 +6020,6 @@ GameObject:
   - component: {fileID: 1597275518}
   - component: {fileID: 1597275519}
   - component: {fileID: 1597275520}
-  - component: {fileID: 1597275521}
   - component: {fileID: 1597275522}
   m_Layer: 0
   m_Name: SceneRoot
@@ -6083,20 +6082,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Needle.Engine.Components.ObjectRaycaster, Needle.Engine
     $ GlobalObjectId_V1-2-49068307165cdb346a242c48a6528235-1597275520-0
---- !u!114 &1597275521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597275517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7a91a191bd51c38dd21832d21f62d8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audio: wind
-  fade: 1
 --- !u!114 &1597275522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6971,7 +6956,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angle: 0
-  bendSound: 0
 --- !u!82 &1824147758
 AudioSource:
   m_ObjectHideFlags: 0

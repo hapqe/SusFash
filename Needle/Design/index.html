@@ -37,7 +37,7 @@
     function submitCloth(e) {
       e.preventDefault();
       window.dispatchEvent(new CustomEvent('submitCloth', { detail: e }));
-      window.parent?.postMessage({click: true}, "*");
+      window.parent?.postMessage({playscore: true}, "*");
     }
   </script>
 

@@ -12,7 +12,7 @@ export class Package extends Behaviour {
 
     
     onTriggerStay(col: ICollider) {
-        const speed = -40;
+        const speed = -80;
         
         if (col.gameObject.name === 'ConveyorBelt') {
             if(!this.rigidBody?.isKinematic) {

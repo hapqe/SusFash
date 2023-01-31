@@ -59,7 +59,7 @@ async function userData(req: Request, upload: boolean = false) {
 
     if(upload) {
         json = { ...json, ...req.body };
-
+        
         await fs.promises.writeFile(path, JSON.stringify(json));
     }
 

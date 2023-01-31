@@ -111,6 +111,6 @@ export class DesignHandler extends Behaviour {
 
         this.toolElement!.src = `./svgs/${SelectedTool[this.selectedTool]}.svg`;
 
-        window.parent?.postMessage({click: true}, "*");
+        window.parent?.postMessage({playclick: true}, "*");
     }
 }

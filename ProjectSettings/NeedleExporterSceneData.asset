@@ -49,7 +49,11 @@ MonoBehaviour:
     BuilderScene: 
   - Path: Assets/Scenes/Shipping.unity
     Projects:
-    - ProjectPath: Needle/Template
+    - ProjectPath: Needle/Shipping
+    BuilderScene: 
+  - Path: Assets/Scenes/Trading.unity
+    Projects:
+    - ProjectPath: Needle/Trading
     BuilderScene: 
   Projects:
   - ProjectPath: Needle/Design
@@ -60,3 +64,5 @@ MonoBehaviour:
   - ProjectPath: Needle/Phone
   - ProjectPath: Needle/Shopping
   - ProjectPath: Needle/Template
+  - ProjectPath: Needle/Shipping
+  - ProjectPath: Needle/Trading

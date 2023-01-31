@@ -8,12 +8,13 @@
 
 [36mvite v3.2.5 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 304 modules transformed.
+[32m✓[39m 308 modules transformed.
 rendering chunks...
 [90m[37m[2mdist/[22m[90m[39m[32massets/favicon.8d99ceea.ico  [39m [2m14.73 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[32mindex.html                   [39m [2m1.05 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[35massets/index.ba4d5d10.css    [39m [2m1.00 KiB / gzip: 0.48 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[36massets/index.85bfd53a.js     [39m [33m4211.66 KiB / gzip: 1316.81 KiB[39m
+[90m[37m[2mdist/[22m[90m[39m[32massets/Reset.44177f78.svg    [39m [2m1.63 KiB[22m
+[90m[37m[2mdist/[22m[90m[39m[32mindex.html                   [39m [2m1.43 KiB[22m
+[90m[37m[2mdist/[22m[90m[39m[35massets/index.23972a81.css    [39m [2m1.42 KiB / gzip: 0.65 KiB[22m
+[90m[37m[2mdist/[22m[90m[39m[36massets/index.6b9951ed.js     [39m [33m4213.85 KiB / gzip: 1317.39 KiB[39m
 
 > my-project@1.0.0 copy-files
 > copy-files-from-to
@@ -94,22 +95,22 @@ toktx:texture(8/11): Slots → []
 toktx:texture(9/11): Slots → []
 toktx:texture(10/11): Slots → [baseColorTexture]
 toktx:texture(11/11): Slots → [baseColorTexture]
-toktx:texture(1/11): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_0.png
-toktx:texture(3/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_2.png
-toktx:texture(4/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_3.png
-toktx:texture(5/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_4.png
-toktx:texture(6/11): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_5.jpg
-toktx:texture(7/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_6.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_6.png
-toktx:texture(10/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_9.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_9.png
-toktx:texture(11/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_10.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_10.png
-toktx:texture(2/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/weXBRd_1.jpg
+toktx:texture(1/11): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_0.png
+toktx:texture(3/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_2.png
+toktx:texture(5/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_4.png
+toktx:texture(4/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_3.png
+toktx:texture(6/11): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_5.jpg
+toktx:texture(7/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_6.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_6.png
+toktx:texture(10/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_9.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_9.png
+toktx:texture(11/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_10.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_10.png
+toktx:texture(2/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/KnRm6E_1.jpg
 toktx:texture(1/11): 76 Bytes → 521 Bytes bytes
-toktx:texture(3/11): 2.84 KB → 1.72 KB bytes
 toktx:texture(5/11): 80 Bytes → 483 Bytes bytes
+toktx:texture(3/11): 2.84 KB → 1.72 KB bytes
 toktx:texture(10/11): 632 Bytes → 1.07 KB bytes
 toktx:texture(6/11): 31.92 KB → 4.51 KB bytes
-toktx:texture(4/11): 20.44 KB → 9.97 KB bytes
 toktx:texture(7/11): 34.4 KB → 10.1 KB bytes
+toktx:texture(4/11): 20.44 KB → 9.97 KB bytes
 toktx:texture(11/11): 85.43 KB → 20.83 KB bytes
 toktx:texture(2/11): 894.02 KB → 188.23 KB bytes
 [KHR_draco_mesh_compression] Compression options: {"method":1,"encodeSpeed":5,"decodeSpeed":5,"quantizationBits":{"POSITION":14,"NORMAL":10,"COLOR":8,"TEX_COORD":12,"GENERIC":12},"quantizationVolume":"mesh"}

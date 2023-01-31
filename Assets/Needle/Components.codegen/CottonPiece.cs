@@ -11,7 +11,6 @@ namespace Needle.Typescript.GeneratedComponents
 		public void reset(){}
 		public void update(){}
 		public void disable(){}
-		public void onCollisionEnter(UnityEngine.Collision @col){}
 	}
 }
 

@@ -4,8 +4,7 @@ function showText(str, props = {}) {
     const duration = props.duration ?? 2500;
     const after = props.after ?? 500;
     const color = props.color ?? 'white';
-    const position = props.position ??
-        ['top', 'bottom', 'center'][Math.floor(Math.random() * 3)];
+    const position = props.position ?? 'center';
 
     let html = '';
     // for every word append a span with a space
@@ -38,7 +37,7 @@ function showText(str, props = {}) {
     }
     text.parentElement.style.alignItems = a;
         
-    playSound('starttyping');
+    playSound('playtyping');
 
     const typingDuration = count * 100 + 500;
 
@@ -47,7 +46,7 @@ function showText(str, props = {}) {
     }, typingDuration);
 
     setTimeout(() => {
-        playSound('bubble');
+        playSound('playbubble');
     }, typingDuration + duration - 500);
 
     return new Promise((resolve) => setTimeout(resolve, 2 * (count * 100) + duration + after));

@@ -31,10 +31,11 @@ export class Bucket extends Behaviour {
         this.score!.innerText = `${Math.min(++this.count, this.max)}/${this.max}`;
 
         if(this.count == this.max) {
-            console.log("NEXT");
+            window.parent?.postMessage({ designScene: true }, "*");
+            window.parent?.postMessage({ done: true }, "*");
         }
         
-        window.parent?.postMessage({score: true}, "*");
+        window.parent?.postMessage({playscore: true}, "*");
         
         this.animator?.SetTrigger('effect');
         this.particles?.play();

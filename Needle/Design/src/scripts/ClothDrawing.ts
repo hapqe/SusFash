@@ -69,7 +69,7 @@ export class ClothDrawing extends Behaviour {
         // @ts-ignore
         this.sprayRenderer!.sharedMaterial.color = new Color(color.x, color.y, color.z);
 
-        window.parent?.postMessage({splash: true}, "*");
+        window.parent?.postMessage({playsplash: true}, "*");
     }
 
     drawCircle(color: Vector3, uv: Vector2, radius: number) {
