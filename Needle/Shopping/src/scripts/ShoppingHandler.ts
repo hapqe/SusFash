@@ -1,4 +1,4 @@
-import { AssetReference, Behaviour, BoxCollider, findObjectOfType, GameObject, instantiate, isActiveSelf, ParticleSystem, Renderer, Rigidbody, serializable, setActive } from '@needle-tools/engine';
+import { AssetReference, Behaviour, BoxCollider, DropListener, findObjectOfType, GameObject, instantiate, isActiveSelf, ParticleSystem, Renderer, Rigidbody, serializable, setActive } from '@needle-tools/engine';
 import { Physics } from '@needle-tools/engine/engine/engine_physics';
 import { Object3D, Vector2, Vector3 } from 'three';
 import { Escalator } from './Escalator';
@@ -13,7 +13,7 @@ export class ShoppingHandler extends Behaviour {
     gameover() {
         if(this.over) return;
         this.over = true;
-        
+
         findObjectOfType(PlayerController, this.context, false)!.enabled = false;
         window.parent.postMessage({shirtCount: this.shirtCount || 5}, "*");
         window.parent.postMessage({done: true}, "*");
@@ -42,6 +42,9 @@ export class ShoppingHandler extends Behaviour {
     coolnessDropping = false;
     _coolness = .2;
 
+    secretPotential = 0;
+    spawnedSecret = false;
+
     get coolness() {
         return this._coolness;
     }
@@ -64,11 +67,13 @@ export class ShoppingHandler extends Behaviour {
             if(d.data.test) {
                 this.spawn();
             }
-        })
+        });
 
-        setTimeout(() => {
-            this.gameover();
-        },3000);
+        window.addEventListener('userData', (d: any) => {
+            let data = d.detail;
+            if(!data['Hairspray'])
+                this.secretPotential = .3;
+        })
     }
 
     start() {
@@ -174,6 +179,10 @@ export class ShoppingHandler extends Behaviour {
     
             if (store) {
                 this.blocks.set(stringify(), store);
+                if(!this.spawnedSecret && Math.random() < this.secretPotential) {
+                    store.spawnSecret();
+                    this.spawnedSecret = true;
+                }
             }
         }
         else {

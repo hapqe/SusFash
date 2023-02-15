@@ -120,11 +120,31 @@ function saveDesign(req) {
         yield fs_1.default.promises.writeFile(path, buffer);
     });
 }
-function getDesign() {
+function getDesign(req, { notFromUser = false, savedDesign = false }) {
+    var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const designs = yield fs_1.default.promises.readdir('./designs');
         const count = designs.length;
-        let index = Math.floor(Math.random() * count);
+        const i = () => Math.floor(Math.random() * count);
+        let index = i();
+        let hash = (_a = req.fingerprint) === null || _a === void 0 ? void 0 : _a.hash;
+        let maxTries = 10;
+        if (notFromUser && hash) {
+            while (designs[index].startsWith(hash)) {
+                index = i();
+                maxTries--;
+                if (maxTries == 0)
+                    break;
+            }
+        }
+        if (savedDesign && hash) {
+            while (!designs[index].startsWith(hash)) {
+                index = i();
+                maxTries--;
+                if (maxTries == 0)
+                    break;
+            }
+        }
         let path = `./designs/${designs[index]}`;
         let data = yield fs_1.default.promises.readFile(path, 'base64');
         return {
@@ -134,6 +154,23 @@ function getDesign() {
         };
     });
 }
-app.get('/design', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    getDesign().then(d => res.send(d));
+function getDesignFromUser(user, not = false) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const designs = yield fs_1.default.promises.readdir('./designs');
+        const count = designs.length;
+        let index = Math.floor(Math.random() * count);
+        while (!designs[index].startsWith(user) == not) {
+            index = Math.floor(Math.random() * count);
+        }
+        let path = `./designs/${designs[index]}`;
+        let data = yield fs_1.default.promises.readFile(path, 'base64');
+        return {
+            isDesign: true,
+            design: `data:image/png;base64,${data}`,
+            stamp: designs[index]
+        };
+    });
+}
+app.post('/design', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    getDesign(req, Object.assign({}, req.body)).then(d => res.send(d));
 }));

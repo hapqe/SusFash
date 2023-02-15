@@ -8,6 +8,7 @@ namespace Needle.Typescript.GeneratedComponents
 	public partial class ShoppingHandler : UnityEngine.MonoBehaviour
 	{
 		// public undefined @shirtCount; → Could not resolve C# type
+		// public undefined @over; → Could not resolve C# type
 		public void gameover(){}
 		public UnityEngine.Transform @store;
 		public UnityEngine.Transform @escalator;
@@ -18,6 +19,8 @@ namespace Needle.Typescript.GeneratedComponents
 		// public undefined @isSpeacial; → Could not resolve C# type
 		// public undefined @coolnessDropping; → Could not resolve C# type
 		// public undefined @_coolness; → Could not resolve C# type
+		// public undefined @secretPotential; → Could not resolve C# type
+		// public undefined @spawnedSecret; → Could not resolve C# type
 		public float @coolness;
 		public void awake(){}
 		public void start(){}

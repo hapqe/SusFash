@@ -4,7 +4,7 @@ window.addEventListener('message', async (e) => {
     if(e.data.shirtCount) {
         shirtCount = e.data.shirtCount;
     }
-    
+
     const k = Object.keys(e.data)[0].toLowerCase();
 
     if (k.endsWith('scene')) {
@@ -71,8 +71,7 @@ window.addEventListener('message', async (e) => {
 
                 const c = shirtCount;
 
-                let text = `
-                Du hast gerade ${c} Kleidungsstücke gekauft. Insgesammt bedeutet das ${c * 11} Kilogramm CO2-Emissionen. ${c} * 2700 Liter Wasserverbrauch, also unglaubliche ${Math.round(c * 2700 / 165)} volle Badewannen wurden bei der Produktion dieser Kleidungsstücke verbraucht.\nDeine gekauften Kleidungsstücke sind zudem ${c * 34}.225 Kilometer um die Welt gereist. Das sind ${Math.round(c * 34225 / 40075)} Rundflüge um den Äquator.`
+                let text = `Du hast gerade ${c} Kleidungsstücke gekauft. Insgesammt bedeutet das ${c * 11} Kilogramm CO2-Emissionen. ${c} * 2700 Liter Wasserverbrauch, also unglaubliche ${Math.round(c * 2700 / 165)} volle Badewannen wurden bei der Produktion dieser Kleidungsstücke verbraucht.\nDeine gekauften Kleidungsstücke sind zudem ${c * 34}.225 Kilometer um die Welt gereist. Das sind ${Math.round(c * 34225 / 40075)} Rundflüge um den Äquator.`
 
                 if(c < 60) {
                     text += '\nTrotzdem waren das weniger Kleidungsstücke, als die 60 Stück, die ein durchschnittlicher deutscher Konsument jährlich kauft.'

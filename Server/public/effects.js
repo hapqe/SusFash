@@ -39,6 +39,7 @@ function playSound(k) {
         playing.get(s)?.pause();
         playing.get('c_' + s)?.pause();
         playing.delete(s);
+        playing.delete('c_' + s);
     }
     if(k.startsWith('loop')) {
         const s = slice(k);

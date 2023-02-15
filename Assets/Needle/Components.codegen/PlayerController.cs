@@ -7,7 +7,9 @@ namespace Needle.Typescript.GeneratedComponents
 {
 	public partial class PlayerController : UnityEngine.MonoBehaviour
 	{
+		public string @design = "";
 		public void setTexture(UnityEngine.Texture @map){}
+		public void setDesign(string @design){}
 		// public undefined @speed; → Could not resolve C# type
 		public UnityEngine.Rigidbody @rigidbody;
 		// public undefined @startPos; → Could not resolve C# type
@@ -26,7 +28,8 @@ namespace Needle.Typescript.GeneratedComponents
 		public void update(){}
 		// public undefined @isRunning; → Could not resolve C# type
 		// public undefined @stepped; → Could not resolve C# type
-		public void setDirection(){}
+		public void setDirection(UnityEngine.Vector3 @v){}
+		public void onTriggerEnter(object @col){}
 	}
 }
 

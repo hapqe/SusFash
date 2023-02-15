@@ -1,4 +1,4 @@
-import { Animator, Behaviour, GameObject, getComponent, MeshRenderer, ParticleSystem, Rigidbody, serializable, SkinnedMeshRenderer } from '@needle-tools/engine';
+import { Animator, Behaviour, DropListener, GameObject, getComponent, MeshRenderer, ParticleSystem, Rigidbody, serializable, SkinnedMeshRenderer } from '@needle-tools/engine';
 import { Transform } from '@needle-tools/engine/engine-schemes/transform';
 import { Physics } from '@needle-tools/engine/engine/engine_physics';
 import { CollisionDetectionMode } from '@needle-tools/engine/engine/engine_physics.types';
@@ -19,6 +19,7 @@ export class PlayerController extends Behaviour {
     rigidbody!: Rigidbody;
 
     startPos = { x: 0, y: 0 };
+    
     velocity = new Vector3();
     click = false;
     joy = document.getElementById('joy')!;
@@ -120,19 +121,38 @@ export class PlayerController extends Behaviour {
     }
 
     update(): void {
-        let v = this.velocity.clone().multiplyScalar(this.context.time.deltaTime * 100);
+        let v = this.velocity.clone();
+
+        // wasd or arrow keys
+        if (this.context.input.isKeyPressed('w') || this.context.input.isKeyPressed('ArrowUp')) {
+            v.z += 1;
+        }
+        if (this.context.input.isKeyPressed('s') || this.context.input.isKeyPressed('ArrowDown')) {
+            v.z -= 1;
+        }
+        if (this.context.input.isKeyPressed('a') || this.context.input.isKeyPressed('ArrowLeft')) {
+            v.x += 1;
+        }
+        if (this.context.input.isKeyPressed('d') || this.context.input.isKeyPressed('ArrowRight')) {
+            v.x -= 1;
+        }
+
+        v.normalize();
+        v.multiplyScalar(this.speed);
+        
+        v = v.multiplyScalar(this.context.time.deltaTime * 100);
 
         // @ts-ignore
         this.rigidbody.setVelocity(v);
 
-        this.setDirection();
+        this.setDirection(v.clone());
     }
 
     isRunning = false;
     stepped = false;
 
-    setDirection() {
-        const s = this.velocity.length();
+    setDirection(v: Vector3) {
+        const s = v.length();
         if (!this.isRunning && s > 0.1) {
             this.animator.SetTrigger('run');
         }
@@ -155,10 +175,19 @@ export class PlayerController extends Behaviour {
 
         this.isRunning = true;
 
-        const dir = this.velocity.clone();
+        
+        const dir = v;
         dir.y = 0;
         dir.normalize();
         const angle = Math.atan2(dir.x, dir.z);
+        // @ts-ignore
         this.animator.gameObject.rotation.y = angle + Math.PI / 2;
+    }
+
+    onTriggerEnter(col: ICollider) {
+        if(col.gameObject.name == "ShoppingSecret") {
+            window.parent.postMessage({ secret: "Hairspray" }, "*");
+            col.gameObject.activeSelf = false;
+        }
     }
 }

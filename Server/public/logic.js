@@ -1,8 +1,14 @@
 let frame = document.querySelector('iframe');
 
-let design;
-
 window.addEventListener('message', (e) => {
+    if(e.data.sceneLoaded) {
+        if(frame.src.includes('earth')) {
+            showInfo('Tippe auf den grünen Punkt!');
+        }
+        if(frame.src.includes('cotton')) {
+            showInfo('Ziehe 8 Baumwollstücke in den Kübel!');
+        }
+    }
     if(e.data.secret) {
         showSecret(e.data.secret)
         post({
@@ -13,7 +19,8 @@ window.addEventListener('message', (e) => {
         userData();
     }
     if(e.data.fetchDesign) {
-        getDesign();
+        delete e.data.fetchDesign;
+        getDesign(e.data);
     }
     if(e.data.design) {
         (async () => {
@@ -26,6 +33,7 @@ window.addEventListener('message', (e) => {
             });
             info.querySelector('#show').src = e.data.design;
             design = e.data.design;
+            savedDesign = e.data.design;
             showInfoPage();
         })();
     }
@@ -48,10 +56,20 @@ const userData = async () => {
     frame.contentWindow.postMessage(data, '*');
 };
 
-const getDesign = async () => {
-    let data = await fetch('/design', { method: "get", headers: { 'Content-Type': 'application/json' } });
-    data = await data.json()
-    frame.contentWindow.postMessage(data, '*');
+const getDesign = async (additional) => {
+    let data;
+    if(additional.savedDesign && typeof savedDesign !== 'undefined') {
+        data = 
+        {
+            design: savedDesign,
+            isDesign: true,
+        }
+    }
+    else {
+        data = await fetch('/design', { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...additional }) });
+        data = await data.json()
+    }
+    frame.contentWindow.postMessage({...data, time: additional.time}, '*');
 };
 
 function deleteUser() {

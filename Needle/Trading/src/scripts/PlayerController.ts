@@ -1,4 +1,4 @@
-import { Animator, Behaviour, GameObject, getComponent, MeshRenderer, ParticleSystem, Rigidbody, serializable, SkinnedMeshRenderer } from '@needle-tools/engine';
+import { Animator, Behaviour, DropListener, GameObject, getComponent, MeshRenderer, ParticleSystem, Rigidbody, serializable, SkinnedMeshRenderer } from '@needle-tools/engine';
 import { Transform } from '@needle-tools/engine/engine-schemes/transform';
 import { Physics } from '@needle-tools/engine/engine/engine_physics';
 import { CollisionDetectionMode } from '@needle-tools/engine/engine/engine_physics.types';
@@ -7,6 +7,8 @@ import { MeshBasicMaterial, Vector2, Vector3 } from 'three';
 import * as THREE from 'three';
 
 export class PlayerController extends Behaviour {
+    design: string = "";
+    
     setTexture(map: THREE.Texture) {
         // @ts-ignore  
         this.shirt.sharedMaterial.map = map;
@@ -14,11 +16,17 @@ export class PlayerController extends Behaviour {
         this.shirt.sharedMaterial.needsUpdate = true;
     }
 
-    speed = .8;
+    setDesign(design: string) {
+        this.design = design;
+        window.postMessage({ left: this.design }, '*');
+    }
+
+    speed = 4;
 
     rigidbody!: Rigidbody;
 
     startPos = { x: 0, y: 0 };
+    
     velocity = new Vector3();
     click = false;
     joy = document.getElementById('joy')!;
@@ -78,8 +86,6 @@ export class PlayerController extends Behaviour {
         window.addEventListener('touchend', () => {
             this.endMove();
         });
-
-        document.body.addEventListener('touchstart', function (e) { e.preventDefault(); });
     }
 
     pos(e: any, m = 100) {
@@ -105,10 +111,11 @@ export class PlayerController extends Behaviour {
 
         this.joy.style.transform = `rotate(${r}rad) scaleX(${mag})`;
 
-        this.velocity = new Vector3(delta.y, 0, -delta.x);
+        this.velocity = new Vector3(delta.x, 0, delta.y);
         this.velocity.normalize();
         this.velocity.multiplyScalar(this.speed);
         this.velocity.multiplyScalar(this.boosted ? 3 : 1);
+        this.velocity.negate();
     }
 
     endMove() {
@@ -119,19 +126,38 @@ export class PlayerController extends Behaviour {
     }
 
     update(): void {
-        let v = this.velocity.clone().multiplyScalar(this.context.time.deltaTime * 100);
+        let v = this.velocity.clone();
+
+        // wasd or arrow keys
+        if (this.context.input.isKeyPressed('w') || this.context.input.isKeyPressed('ArrowUp')) {
+            v.z += 1;
+        }
+        if (this.context.input.isKeyPressed('s') || this.context.input.isKeyPressed('ArrowDown')) {
+            v.z -= 1;
+        }
+        if (this.context.input.isKeyPressed('a') || this.context.input.isKeyPressed('ArrowLeft')) {
+            v.x += 1;
+        }
+        if (this.context.input.isKeyPressed('d') || this.context.input.isKeyPressed('ArrowRight')) {
+            v.x -= 1;
+        }
+
+        v.normalize();
+        v.multiplyScalar(this.speed);
+        
+        v = v.multiplyScalar(this.context.time.deltaTime * 100);
 
         // @ts-ignore
         this.rigidbody.setVelocity(v);
 
-        this.setDirection();
+        this.setDirection(v.clone());
     }
 
     isRunning = false;
     stepped = false;
 
-    setDirection() {
-        const s = this.velocity.length();
+    setDirection(v: Vector3) {
+        const s = v.length();
         if (!this.isRunning && s > 0.1) {
             this.animator.SetTrigger('run');
         }
@@ -154,10 +180,19 @@ export class PlayerController extends Behaviour {
 
         this.isRunning = true;
 
-        const dir = this.velocity.clone();
+        
+        const dir = v;
         dir.y = 0;
         dir.normalize();
         const angle = Math.atan2(dir.x, dir.z);
+        // @ts-ignore
         this.animator.gameObject.rotation.y = angle + Math.PI / 2;
+    }
+
+    onTriggerEnter(col: ICollider) {
+        if(col.gameObject.name == "TradingSecret") {
+            window.parent.postMessage({ secret: "Im Tunnel" }, "*");
+            col.gameObject.activeSelf = false;
+        }
     }
 }

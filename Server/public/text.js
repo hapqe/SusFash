@@ -1,7 +1,8 @@
 const text = document.querySelector('#text');
 
 function showText(str, props = {}) {
-    const duration = props.duration ?? 2500;
+    const style = window.getComputedStyle(document.documentElement);
+    const wordDur = parseInt(style.getPropertyValue('--word-time'));
     const after = props.after ?? 500;
     const color = props.color ?? 'white';
     const position = props.position ?? 'center';
@@ -13,9 +14,10 @@ function showText(str, props = {}) {
         html += `<div style="color: ${color}">${word}</div>&nbsp`;
         count++;
     });
+    duration = count * 150 + 1000;
     text.innerHTML = html;
 
-    let d = count * 100 + duration;
+    let d = count * wordDur + duration;
     requestAnimationFrame(() => {
         text.setAttribute('data-blur', false);
     });
@@ -39,7 +41,7 @@ function showText(str, props = {}) {
         
     playSound('playtyping');
 
-    const typingDuration = count * 100 + 500;
+    const typingDuration = count * wordDur + 500;
 
     setTimeout(() => {
         playSound('stoptyping');
@@ -49,5 +51,5 @@ function showText(str, props = {}) {
         playSound('playbubble');
     }, typingDuration + duration - 500);
 
-    return new Promise((resolve) => setTimeout(resolve, 2 * (count * 100) + duration + after));
+    return new Promise((resolve) => setTimeout(resolve, 2 * (count * wordDur) + duration + after));
 }

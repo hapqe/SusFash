@@ -14,6 +14,8 @@ namespace Needle.Typescript.GeneratedComponents
 		public UnityEngine.GameObject @specialObject;
 		public UnityEngine.GameObject @glowObject;
 		public UnityEngine.GameObject @checkObject;
+		public UnityEngine.GameObject @secretLocation;
+		public UnityEngine.Transform @secret;
 		// public undefined @special; → Could not resolve C# type
 		public Needle.Typescript.GeneratedComponents.ShoppingParticles @particles;
 		public UnityEngine.Texture @map;
@@ -21,6 +23,7 @@ namespace Needle.Typescript.GeneratedComponents
 		public void randomize(){}
 		public void playPartices(){}
 		public void collect(object @p){}
+		public void spawnSecret(){}
 		public void onTriggerEnter(object @col){}
 		public void show(){}
 	}

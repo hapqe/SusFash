@@ -124,11 +124,30 @@ async function saveDesign(req: Request) {
     await fs.promises.writeFile(path, buffer);
 }
 
-async function getDesign() {
+async function getDesign(req: Request, {notFromUser = false, savedDesign = false}) {
     const designs = await fs.promises.readdir('./designs');
     const count = designs.length;
 
-    let index = Math.floor(Math.random() * count);
+    const i = () => Math.floor(Math.random() * count);
+    
+    let index = i();
+    let hash = req.fingerprint?.hash;
+
+    let maxTries = 10;
+    if(notFromUser && hash) {
+        while(designs[index].startsWith(hash)) {
+            index = i();
+            maxTries--;
+            if(maxTries == 0) break;
+        }
+    }
+    if(savedDesign && hash) {
+        while(!designs[index].startsWith(hash)) {
+            index = i();
+            maxTries--;
+            if(maxTries == 0) break;
+        }
+    }
 
     let path = `./designs/${designs[index]}`;
 
@@ -141,6 +160,26 @@ async function getDesign() {
     };
 }
 
-app.get('/design', async (req, res, next) => {
-    getDesign().then(d => res.send(d));
+async function getDesignFromUser(user: string, not = false) {
+    const designs = await fs.promises.readdir('./designs');
+    const count = designs.length;
+
+    let index = Math.floor(Math.random() * count);
+    while(!designs[index].startsWith(user) == not) {
+        index = Math.floor(Math.random() * count);
+    }
+
+    let path = `./designs/${designs[index]}`;
+
+    let data = await fs.promises.readFile(path, 'base64');
+
+    return {
+        isDesign: true,
+        design: `data:image/png;base64,${data}`,
+        stamp: designs[index]
+    };
+}
+
+app.post('/design', async (req, res, next) => {
+    getDesign(req, {...req.body}).then(d => res.send(d));
 });
