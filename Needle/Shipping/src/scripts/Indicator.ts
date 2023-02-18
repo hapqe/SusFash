@@ -40,8 +40,6 @@ export class Indicator extends Behaviour {
     }
 
     private disable() {
-        let renderer = this.gameObject.getComponent(MeshRenderer);
-        this.enabled = false;
-        renderer!.enabled = false;
+        this.gameObject.activeSelf = false;
     }
 }

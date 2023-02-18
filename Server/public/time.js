@@ -1,39 +1,50 @@
 let playerRunning = false;
-const wrapper = document.querySelector('#time-wrapper');
-wrapper.style.display = playerRunning ? 'flex' : 'none';
-
-let active = false;
-
-const element = document.querySelector('#time');
-
-let last = Date.now();
+let timerActive = false;
 let time = 0;
+let timeString = '00:00:000';
 
-window.addEventListener('message', async (e) => {
-    if(e.data.sceneLoaded) active = true;
-    if(e.data.done) active = false;
-});
-
-function update() {
-    const zeroPad = (num, places) => String(num).padStart(places, '0')
+function run() {
+    const wrapper = document.querySelector('#time-wrapper');
+    wrapper.style.display = playerRunning ? 'flex' : 'none';
     
-    const seconds = Math.floor(time / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const millis = time % 1000;
-
-    const s = zeroPad(seconds, 2);
-    const m = zeroPad(minutes, 2);
-    const ms = zeroPad(millis, 3);
+    const element = document.querySelector('#time');
     
-    element.innerHTML = `${m}:${s}:${ms}`;
-
-    const now = Date.now();
-    const diff = now - last;
-
-    if(active)
-    time += diff;
-
-    last = now;
+    let last = Date.now();
+    
+    window.addEventListener('message', async (e) => {
+        if(e.data.sceneLoaded) timerActive = true;
+        if(e.data.done) timerActive = false;
+    });
+    
+    function update() {
+        const zeroPad = (num, places) => String(num).padStart(places, '0')
+        
+        const seconds = Math.floor(time / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const millis = time % 1000;
+    
+        const s = zeroPad(seconds, 2);
+        const m = zeroPad(minutes, 2);
+        const ms = zeroPad(millis, 3);
+        
+        timeString = `${m}:${s}:${ms}`;
+        element.innerHTML = timeString;
+    
+        const now = Date.now();
+        const diff = now - last;
+    
+        if(timerActive)
+        time += diff;
+    
+        last = now;
+        requestAnimationFrame(update);
+    }
     requestAnimationFrame(update);
 }
-requestAnimationFrame(update);
+
+function stopTimer() {
+    if(!playerRunning) return;
+    timerActive = false;
+    document.querySelector('#time-wrapper').style.display = 'none';
+    frame.contentWindow.postMessage({stopTimer: true, time, timeString}, '*');
+}

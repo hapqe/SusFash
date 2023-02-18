@@ -8,12 +8,12 @@
 
 [36mvite v3.2.5 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 297 modules transformed.
+[32m✓[39m 299 modules transformed.
 rendering chunks...
 [90m[37m[2mdist/[22m[90m[39m[32massets/favicon.8d99ceea.ico  [39m [2m14.73 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[32mindex.html                   [39m [2m1.00 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[35massets/index.ba4d5d10.css    [39m [2m1.00 KiB / gzip: 0.48 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[36massets/index.cd47c513.js     [39m [33m4206.23 KiB / gzip: 1315.30 KiB[39m
+[90m[37m[2mdist/[22m[90m[39m[36massets/index.3085baad.js     [39m [33m4207.05 KiB / gzip: 1315.57 KiB[39m
 
 > my-project@1.0.0 copy-files
 > copy-files-from-to
@@ -80,20 +80,20 @@ READ NEEDLE_lightmaps
 READ NEEDLE_lighting_settings
 READ EXT_texture_exr
 toktx: Found KTX-Software v4.1.0-rc3.
-toktx:texture(1/6): Slots → [baseColorTexture]
-toktx:texture(2/6): Slots → [normalTexture]
+toktx:texture(1/6): Slots → [normalTexture]
+toktx:texture(2/6): Slots → [baseColorTexture]
 toktx:texture(3/6): Slots → [normalTexture]
 toktx:texture(4/6): Slots → [baseColorTexture]
 toktx:texture(5/6): Slots → []
 toktx:texture(6/6): Slots → []
-toktx:texture(2/6): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_1.jpg
-toktx:texture(3/6): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_2.jpg
-toktx:texture(4/6): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_3.png
-toktx:texture(1/6): Spawning → toktx --genmipmap --bcmp --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/JKzgzd_0.jpg
+toktx:texture(1/6): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_0.jpg
+toktx:texture(4/6): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_3.png
+toktx:texture(3/6): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_2.jpg
+toktx:texture(2/6): Spawning → toktx --genmipmap --bcmp --threads 6 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/MmnRDe_1.jpg
 toktx:texture(4/6): 76 Bytes → 521 Bytes bytes
 toktx:texture(3/6): 5.53 KB → 2.67 KB bytes
-toktx:texture(2/6): 31.92 KB → 4.51 KB bytes
-toktx:texture(1/6): 1.65 MB → 418.25 KB bytes
+toktx:texture(1/6): 31.92 KB → 4.51 KB bytes
+toktx:texture(2/6): 1.65 MB → 418.25 KB bytes
 [KHR_draco_mesh_compression] Compression options: {"method":1,"encodeSpeed":5,"decodeSpeed":5,"quantizationBits":{"POSITION":14,"NORMAL":10,"COLOR":8,"TEX_COORD":12,"GENERIC":12},"quantizationVolume":"mesh"}
 [KHR_draco_mesh_compression] Compressed 23 primitives.
 WRITE NEEDLE_gameobject_data

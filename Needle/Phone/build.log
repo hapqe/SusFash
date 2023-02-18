@@ -8,12 +8,12 @@
 
 [36mvite v3.2.5 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 300 modules transformed.
+[32m✓[39m 302 modules transformed.
 rendering chunks...
 [90m[37m[2mdist/[22m[90m[39m[32massets/favicon.8d99ceea.ico  [39m [2m14.73 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[32mindex.html                   [39m [2m1.00 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[35massets/index.ba4d5d10.css    [39m [2m1.00 KiB / gzip: 0.48 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[36massets/index.0eeaba91.js     [39m [33m4208.41 KiB / gzip: 1315.92 KiB[39m
+[90m[37m[2mdist/[22m[90m[39m[36massets/index.e6c37150.js     [39m [33m4209.77 KiB / gzip: 1316.23 KiB[39m
 
 > my-project@1.0.0 copy-files
 > copy-files-from-to
@@ -75,6 +75,7 @@ GLB files in C:\Users\hapke\Desktop\unity\Sustained\Needle\Phone\dist\assets: [
 ]
 now packing: C:/Users/hapke/Desktop/unity/Sustained/Needle/Phone/dist/assets/sceneRoot.glb
 READ KHR_animation_pointer
+READ NEEDLE_techniques_webgl
 READ NEEDLE_gameobject_data
 READ NEEDLE_components
 READ NEEDLE_persistent_assets
@@ -82,26 +83,39 @@ READ NEEDLE_lightmaps
 READ NEEDLE_lighting_settings
 READ EXT_texture_exr
 toktx: Found KTX-Software v4.1.0-rc3.
-toktx:texture(1/7): Slots → [baseColorTexture]
-toktx:texture(2/7): Slots → [normalTexture]
-toktx:texture(3/7): Slots → [baseColorTexture]
-toktx:texture(4/7): Slots → [baseColorTexture]
-toktx:texture(5/7): Slots → [baseColorTexture]
-toktx:texture(6/7): Slots → []
-toktx:texture(7/7): Slots → []
-toktx:texture(2/7): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 5.142857142857143 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_1.jpg
-toktx:texture(3/7): Spawning → toktx --genmipmap --bcmp --threads 5.142857142857143 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_2.png
-toktx:texture(4/7): Spawning → toktx --genmipmap --bcmp --threads 5.142857142857143 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_3.png
-toktx:texture(1/7): Spawning → toktx --genmipmap --bcmp --threads 5.142857142857143 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_0.png
-toktx:texture(5/7): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 5.142857142857143 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/8ANGyb_4.png
-toktx:texture(3/7): 768 Bytes → 1 KB bytes
-toktx:texture(5/7): 76 Bytes → 521 Bytes bytes
-toktx:texture(2/7): 31.92 KB → 4.51 KB bytes
-toktx:texture(4/7): 49.31 KB → 21.15 KB bytes
-toktx:texture(1/7): 413.97 KB → 79.89 KB bytes
+toktx:texture(1/11): Slots → [baseColorTexture]
+toktx:texture(2/11): Slots → [normalTexture]
+toktx:texture(3/11): Slots → [baseColorTexture]
+toktx:texture(4/11): Slots → [baseColorTexture]
+toktx:texture(5/11): Slots → [baseColorTexture]
+toktx:texture(6/11): Slots → []
+toktx:texture(7/11): Slots → []
+toktx:texture(8/11): Slots → []
+toktx:texture(9/11): Slots → []
+toktx:texture(10/11): Slots → []
+toktx:texture(11/11): Slots → [baseColorTexture]
+toktx:texture(2/11): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_1.jpg
+toktx:texture(3/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_2.png
+toktx:texture(4/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_3.png
+toktx:texture(1/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_0.png
+toktx:texture(5/11): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_4.png
+toktx:texture(6/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_5.png
+toktx:texture(7/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_6.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_6.png
+toktx:texture(8/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_7.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_7.png
+toktx:texture(11/11): Spawning → toktx --genmipmap --bcmp --threads 3.272727272727273 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_10.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wzWnEy_10.png
+toktx:texture(3/11): 768 Bytes → 1 KB bytes
+toktx:texture(5/11): 76 Bytes → 521 Bytes bytes
+toktx:texture(6/11): 608 Bytes → 1.14 KB bytes
+toktx:texture(8/11): 80 Bytes → 483 Bytes bytes
+toktx:texture(7/11): 2.84 KB → 1.72 KB bytes
+toktx:texture(11/11): 4.72 KB → 2.11 KB bytes
+toktx:texture(2/11): 31.92 KB → 4.51 KB bytes
+toktx:texture(4/11): 49.31 KB → 21.15 KB bytes
+toktx:texture(1/11): 413.97 KB → 79.89 KB bytes
 [KHR_draco_mesh_compression] Compression options: {"method":1,"encodeSpeed":5,"decodeSpeed":5,"quantizationBits":{"POSITION":14,"NORMAL":10,"COLOR":8,"TEX_COORD":12,"GENERIC":12},"quantizationVolume":"mesh"}
-[KHR_draco_mesh_compression] Compressed 17 primitives.
+[KHR_draco_mesh_compression] Compressed 18 primitives.
 WRITE KHR_animation_pointer
+WRITE NEEDLE_techniques_webgl
 WRITE NEEDLE_gameobject_data
 WRITE NEEDLE_components
 WRITE NEEDLE_persistent_assets

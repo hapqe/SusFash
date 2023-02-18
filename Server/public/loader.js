@@ -5,6 +5,8 @@ window.addEventListener('message', async (e) => {
         shirtCount = e.data.shirtCount;
     }
 
+    if(!Object.keys(e.data)[0]) return;
+    
     const k = Object.keys(e.data)[0].toLowerCase();
 
     if (k.endsWith('scene')) {
@@ -18,25 +20,33 @@ window.addEventListener('message', async (e) => {
                     stop: 'space',
                     play: 'playpiano',
                     clouds: true,
-                    text: 'earth_cotton'
+                    text: 'earth_cotton',
+                    tip: "Ziehe 8 Baumwollstücke in den Kübel!"
                 }
             )
             playSound('fadewind');
         }
 
         if(scene === 'design') {
+            if(!playerRunning)
             transitionScene(
                 'design',
                 {
                     stop: 'wind',
-                    text: 'cotton_design'
-                }
+                    text: 'cotton_design',
+                    tip: "Tippe auf Werkzeuge, um sie zu benutzen!",
+                },
             )
+            else
+            setScene('scenes/packaging');
         }
 
         if(scene === 'packaging') {
             transitionScene(
-                'packaging'
+                'packaging',
+                {
+                    tip: "Ziehe 12 Pakete in den Lastwagen."
+                }
             )
             playSound('fadehaunted')
             playSound('fadeconveyor')
@@ -45,22 +55,31 @@ window.addEventListener('message', async (e) => {
         if(scene === 'shipping') {
             playSound('stopconveyor')
             playSound('fadewind');
-            await transitionScene(
-                'shipping'
-            )
-            await wait(2000);
-            await showParagraphs('./text/shipping.txt');
-            await wait(2000);
+            if(!playerRunning) {
+                await transitionScene(
+                    'shipping'
+                )
+                await wait(2000);
+                await showParagraphs('./text/shipping.txt');
+                await wait(2000);
+            }
             playSound('stoppiano');
             playSound('stopwind');
+            if(!playerRunning)
             await darken();
-
+            
             await setScene('scenes/phone');
+            if(!playerRunning)
+            setTimeout(() => {
+                showInfo('Tippe auf das Handy!');
+            }, 2000);
+            playSound('stopwind');
             frame.contentWindow.postMessage({beforeShopping: true}, '*');
         }
 
         if(scene === 'shopping') {
             setScene('scenes/shopping');
+            playSound('stopwind');
         }
 
         if(scene === 'phone') {
@@ -92,13 +111,14 @@ window.addEventListener('message', async (e) => {
                 'trading',
                 {
                     play: 'playpiano',
-                }
+                    tip: 'Gehe zu anderern Charakteren um zu tauschen.'
+                },
             )
         }
 
         if(scene === 'final') {
-            await darken();
-            await showParagraphs('./text/final.txt');
+            await transitionScene('final', {darken: true, stop: 'wind'});
+            post({playedThrough: true})
         }
     }
 });
@@ -162,10 +182,15 @@ async function transitionScene(scene, props = {}) {
             setScene('scenes/' + scene)
         ]);
         else await setScene('scenes/' + scene);
-        
+
         if(props.clouds)
-        hideClouds();
-        else hideTransition();
+        await hideClouds();
+        else if(props.darken) await blink();
+        else await hideTransition();
+
+        if(props.tip) {
+            showInfo(props.tip)
+        }
     }
     else {
         await setScene('scenes/' + scene);

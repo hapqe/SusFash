@@ -8,12 +8,12 @@
 
 [36mvite v3.2.5 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 302 modules transformed.
+[32m✓[39m 303 modules transformed.
 rendering chunks...
 [90m[37m[2mdist/[22m[90m[39m[32massets/favicon.8d99ceea.ico  [39m [2m14.73 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[32mindex.html                   [39m [2m1.00 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[35massets/index.ba4d5d10.css    [39m [2m1.00 KiB / gzip: 0.48 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[36massets/index.10c3ff72.js     [39m [33m4208.17 KiB / gzip: 1315.83 KiB[39m
+[90m[37m[2mdist/[22m[90m[39m[36massets/index.dbb384be.js     [39m [33m4208.44 KiB / gzip: 1315.92 KiB[39m
 
 > my-project@1.0.0 copy-files
 > copy-files-from-to
@@ -90,17 +90,17 @@ toktx:texture(5/8): Slots → []
 toktx:texture(6/8): Slots → []
 toktx:texture(7/8): Slots → []
 toktx:texture(8/8): Slots → [baseColorTexture]
-toktx:texture(1/8): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_0.jpg
-toktx:texture(2/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_1.jpg
-toktx:texture(4/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_3.png
-toktx:texture(6/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_5.png
-toktx:texture(5/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_4.png
-toktx:texture(8/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_7.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_7.png
-toktx:texture(3/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/xvbreV_2.jpg
-toktx:texture(6/8): 80 Bytes → 483 Bytes bytes
+toktx:texture(1/8): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_0.jpg
+toktx:texture(2/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_1.jpg
+toktx:texture(4/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_3.png
+toktx:texture(5/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_4.png
+toktx:texture(6/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_5.png
+toktx:texture(8/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_7.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_7.png
+toktx:texture(3/8): Spawning → toktx --genmipmap --bcmp --threads 4.5 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/k5kQZK_2.jpg
 toktx:texture(4/8): 608 Bytes → 1.14 KB bytes
-toktx:texture(8/8): 4.72 KB → 2.11 KB bytes
+toktx:texture(6/8): 80 Bytes → 483 Bytes bytes
 toktx:texture(5/8): 2.84 KB → 1.72 KB bytes
+toktx:texture(8/8): 4.72 KB → 2.11 KB bytes
 toktx:texture(1/8): 31.92 KB → 4.51 KB bytes
 toktx:texture(2/8): 49.23 KB → 10.78 KB bytes
 toktx:texture(3/8): 1.56 MB → 220.76 KB bytes

@@ -44,6 +44,21 @@ export class PlayerController extends Behaviour {
 
     boosted = false;
 
+    @serializable(GameObject)
+    secret?: GameObject;
+
+    needed = 6;
+    collected = 0;
+
+    trade() {
+        this.collected++;
+        if(this.collected >= this.needed) {
+            window.parent?.postMessage({ finalScene: true }, "*");
+            window.parent?.postMessage({ done: true }, "*");
+        }
+        document.getElementById('progress')!.innerHTML = `${this.collected}/${this.needed}`;
+    }
+
     awake(): void {
         const possibleColors = ['#ff4646', '#57ff57', '#6e6eff', '#c069ff'];
         const color = possibleColors[Math.floor(Math.random() * possibleColors.length)];
@@ -85,6 +100,11 @@ export class PlayerController extends Behaviour {
 
         window.addEventListener('touchend', () => {
             this.endMove();
+        });
+
+        window.addEventListener('userData', (e: any) => {
+            if(e.detail['Im Tunnel'])
+                this.secret!.activeSelf = false;
         });
     }
 
@@ -191,6 +211,7 @@ export class PlayerController extends Behaviour {
 
     onTriggerEnter(col: ICollider) {
         if(col.gameObject.name == "TradingSecret") {
+            window.parent.postMessage({ playcollect: true }, "*");
             window.parent.postMessage({ secret: "Im Tunnel" }, "*");
             col.gameObject.activeSelf = false;
         }

@@ -11,6 +11,7 @@ namespace Needle.Typescript.GeneratedComponents
 		public UnityEngine.Texture @map;
 		public UnityEngine.SkinnedMeshRenderer @clothRenderer;
 		// public any @design; → Could not resolve C# type
+		public string @stamp;
 		public void awake(){}
 		public void show(){}
 	}

@@ -8,12 +8,12 @@
 
 [36mvite v3.2.5 [32mbuilding for production...[36m[39m
 transforming...
-[32m✓[39m 306 modules transformed.
+[32m✓[39m 307 modules transformed.
 rendering chunks...
 [90m[37m[2mdist/[22m[90m[39m[32massets/favicon.8d99ceea.ico  [39m [2m14.73 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[32mindex.html                   [39m [2m1.19 KiB[22m
 [90m[37m[2mdist/[22m[90m[39m[35massets/index.23972a81.css    [39m [2m1.42 KiB / gzip: 0.65 KiB[22m
-[90m[37m[2mdist/[22m[90m[39m[36massets/index.c830d84b.js     [39m [33m4211.83 KiB / gzip: 1316.82 KiB[39m
+[90m[37m[2mdist/[22m[90m[39m[36massets/index.6d1eaec9.js     [39m [33m4212.05 KiB / gzip: 1316.91 KiB[39m
 
 > my-project@1.0.0 copy-files
 > copy-files-from-to
@@ -86,7 +86,7 @@ toktx:texture(1/4): Slots → [baseColorTexture]
 toktx:texture(2/4): Slots → []
 toktx:texture(3/4): Slots → []
 toktx:texture(4/4): Slots → []
-toktx:texture(1/4): Spawning → toktx --genmipmap --bcmp --threads 9 C:\Users\hapke\AppData\Local\Temp/gltf-transform/zBZzGr_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/zBZzGr_0.jpg
+toktx:texture(1/4): Spawning → toktx --genmipmap --bcmp --threads 9 C:\Users\hapke\AppData\Local\Temp/gltf-transform/2nnwz6_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/2nnwz6_0.jpg
 toktx:texture(1/4): 8.3 KB → 3.44 KB bytes
 [KHR_draco_mesh_compression] Compression options: {"method":1,"encodeSpeed":5,"decodeSpeed":5,"quantizationBits":{"POSITION":14,"NORMAL":10,"COLOR":8,"TEX_COORD":12,"GENERIC":12},"quantizationVolume":"mesh"}
 [KHR_draco_mesh_compression] Compressed 1 primitives.
@@ -122,30 +122,30 @@ toktx:texture(13/16): Slots → []
 toktx:texture(14/16): Slots → []
 toktx:texture(15/16): Slots → [baseColorTexture]
 toktx:texture(16/16): Slots → [baseColorTexture]
-toktx:texture(2/16): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_1.png
-toktx:texture(1/16): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_0.jpg
-toktx:texture(4/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_3.png
-toktx:texture(5/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_4.png
-toktx:texture(6/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_5.png
-toktx:texture(7/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_6.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_6.png
-toktx:texture(9/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_8.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_8.png
-toktx:texture(8/16): Spawning → toktx --genmipmap --bcmp --assign_oetf linear --assign_primaries none --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_7.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_7.jpg
-toktx:texture(10/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_9.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_9.png
-toktx:texture(11/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_10.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_10.png
-toktx:texture(15/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_14.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_14.png
-toktx:texture(16/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_15.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_15.png
-toktx:texture(3/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/wEVW2Y_2.jpg
+toktx:texture(1/16): Spawning → toktx --genmipmap --bcmp --normal_mode --input_swizzle rgb1 --assign_oetf linear --assign_primaries none --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_0.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_0.jpg
+toktx:texture(2/16): Spawning → toktx --genmipmap --bcmp --resize 4x4 --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_1.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_1.png
+toktx:texture(4/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_3.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_3.png
+toktx:texture(5/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_4.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_4.png
+toktx:texture(6/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_5.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_5.png
+toktx:texture(7/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_6.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_6.png
+toktx:texture(9/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_8.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_8.png
+toktx:texture(8/16): Spawning → toktx --genmipmap --bcmp --assign_oetf linear --assign_primaries none --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_7.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_7.jpg
+toktx:texture(10/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_9.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_9.png
+toktx:texture(11/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_10.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_10.png
+toktx:texture(15/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_14.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_14.png
+toktx:texture(16/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_15.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_15.png
+toktx:texture(3/16): Spawning → toktx --genmipmap --bcmp --threads 2.25 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_2.ktx2 C:\Users\hapke\AppData\Local\Temp/gltf-transform/y9QPa8_2.jpg
 toktx:texture(2/16): 76 Bytes → 521 Bytes bytes
 toktx:texture(6/16): 2.84 KB → 1.72 KB bytes
 toktx:texture(9/16): 608 Bytes → 1.14 KB bytes
 toktx:texture(11/16): 80 Bytes → 483 Bytes bytes
 toktx:texture(10/16): 2.84 KB → 1.72 KB bytes
-toktx:texture(15/16): 632 Bytes → 1.07 KB bytes
 toktx:texture(1/16): 31.92 KB → 4.51 KB bytes
+toktx:texture(15/16): 632 Bytes → 1.07 KB bytes
 toktx:texture(16/16): 4.72 KB → 2.11 KB bytes
-toktx:texture(5/16): 26.17 KB → 8.74 KB bytes
-toktx:texture(8/16): 41.42 KB → 9.16 KB bytes
 toktx:texture(4/16): 34.4 KB → 10.1 KB bytes
+toktx:texture(8/16): 41.42 KB → 9.16 KB bytes
+toktx:texture(5/16): 26.17 KB → 8.74 KB bytes
 toktx:texture(7/16): 51.43 KB → 14.31 KB bytes
 toktx:texture(3/16): 1.25 MB → 169.9 KB bytes
 [KHR_draco_mesh_compression] Compression options: {"method":1,"encodeSpeed":5,"decodeSpeed":5,"quantizationBits":{"POSITION":14,"NORMAL":10,"COLOR":8,"TEX_COORD":12,"GENERIC":12},"quantizationVolume":"mesh"}

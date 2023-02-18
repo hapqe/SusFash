@@ -34,6 +34,8 @@ window.addEventListener('message', (e) => {
 let playing = new Map();
 
 function playSound(k) {
+    if(!k) return;
+    
     if(k.startsWith('stop')) {
         const s = slice(k);
         playing.get(s)?.pause();
@@ -145,9 +147,10 @@ async function transition() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 }
 
-function hideTransition() {
+async function hideTransition() {
     let s = document.getElementById('star')
     s.style.animation = 'fade 1s forwards';
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 }
 
 async function clouds() {
@@ -158,7 +161,9 @@ async function clouds() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 }
 
-function hideClouds() {
+async function hideClouds() {
     let c = document.getElementById('clouds');
     c.classList.remove('show');
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 }

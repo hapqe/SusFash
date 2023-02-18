@@ -1,14 +1,6 @@
 let frame = document.querySelector('iframe');
 
 window.addEventListener('message', (e) => {
-    if(e.data.sceneLoaded) {
-        if(frame.src.includes('earth')) {
-            showInfo('Tippe auf den grünen Punkt!');
-        }
-        if(frame.src.includes('cotton')) {
-            showInfo('Ziehe 8 Baumwollstücke in den Kübel!');
-        }
-    }
     if(e.data.secret) {
         showSecret(e.data.secret)
         post({
@@ -25,6 +17,15 @@ window.addEventListener('message', (e) => {
     if(e.data.design) {
         (async () => {
             const content = await fetch('/lib/publish.html')
+            const madeDesign = !!window.userData.madeDesign;
+            requestAnimationFrame(() => {
+                if(madeDesign) {
+                    document.getElementById('submit-header').innerHTML = "Willst du dein Design veröffentlichen?";
+                }
+                else {
+                    document.getElementById('submit-header').innerHTML = "Wird das dein erstes Kleidungsdesign werden?";
+                }
+            });
             const text = await content.text();
             
             const info = setInfoPage({
@@ -37,12 +38,40 @@ window.addEventListener('message', (e) => {
             showInfoPage();
         })();
     }
+    if(e.data.showPanel) {
+        const name = e.data.showPanel;
+        (async () => {
+            const content = await fetch('/lib/' + name + '.html');
+            const text = await content.text();
+            setInfoPage({
+                content: text,
+                ...e.data,
+            });
+            showInfoPage();
+        })();
+    }
     if(e.data.collectCloth) {
         post({
             collectDesign: true,
             id: e.data.id,
             date: e.data.date,
         });
+    }
+    if(e.data.tradeCloth) {
+        post({
+            tradeDesign: true,
+            id: e.data.id,
+            date: e.data.date,
+        });
+    }
+    if(e.data.tip) {
+        showInfo(e.data.tip);
+    }
+    if(e.data.toHub) {
+        setScene('scenes/hub');
+    }
+    if(e.data.stopTimer) {
+        stopTimer();
     }
 });
 
@@ -51,10 +80,16 @@ window.post = function (data, url = "/") {
 }
 
 const userData = async () => {
-    let data = await fetch('/userData', { method: "get", headers: { 'Content-Type': 'application/json' } });
-    data = await data.json()
-    frame.contentWindow.postMessage(data, '*');
+    if(!window.userData) {
+        let data = await fetch('/userData', { method: "get", headers: { 'Content-Type': 'application/json' } });
+        data = await data.json()
+        window.userData = data;
+        // frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
+    }
+    frame.contentWindow.postMessage(window.userData, '*');
 };
+
+userData();
 
 const getDesign = async (additional) => {
     let data;
@@ -105,17 +140,21 @@ function setInfoPage(params) {
         document.getElementById('info-page-icon-right').src = 'svgs/' + params.icon + '.svg';
     }
     if(params.left) {
-        document.getElementById('info-page-icon-left').src = 'svgs/' + params.icon + '.svg';
+        document.getElementById('info-page-icon-left').src = 'svgs/' + params.left + '.svg';
     }
     if(params.right) {  
-        document.getElementById('info-page-icon-right').src = 'svgs/' + params.icon + '.svg';
+        document.getElementById('info-page-icon-right').src = 'svgs/' + params.right + '.svg';
+    }
+    if(params.padding) {
+        document.getElementById('info-page-content').style.padding = params.padding;
     }
     return content;
 }
 
 function showInfoPage() {
-    document.getElementById('info-page').style.display = 'block';
-    document.getElementById('info-page').style.opacity = '1';
+    let info = document.getElementById('info-page');
+    info.style.display = 'block';
+    info.style.opacity = '1';
 }
 
 function hideInfoPage() {

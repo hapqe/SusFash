@@ -21,6 +21,10 @@ namespace Needle.Typescript.GeneratedComponents
 		public UnityEngine.ParticleSystem @particles;
 		public UnityEngine.Animator @animator;
 		// public undefined @boosted; → Could not resolve C# type
+		public UnityEngine.GameObject @secret;
+		// public undefined @needed; → Could not resolve C# type
+		// public undefined @collected; → Could not resolve C# type
+		public void trade(){}
 		public void awake(){}
 		public void pos(object @e, object @m){}
 		public void move(object @e){}

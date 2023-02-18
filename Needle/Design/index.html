@@ -26,6 +26,8 @@
   <script type="module" src="./src/generated/gen.js"></script>
   <script type="module" src="./src/main.ts"></script>
   <script>
+    let inPlanTrought = true;
+    
     function setTool(e) {
       e.preventDefault();
       window.dispatchEvent(new CustomEvent('setTool', { detail: e }));

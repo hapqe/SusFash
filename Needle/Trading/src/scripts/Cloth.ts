@@ -13,12 +13,16 @@ export class ClothPicker extends Behaviour {
     clothRenderer?: SkinnedMeshRenderer;
     design: any;
 
+    stamp?: string;
+
     awake() {
         const time = Date.now();
         window.parent.postMessage({ fetchDesign: true, notFromUser: !this.getSavedDesign, savedDesign: this.getSavedDesign, time }, "*");
         window.addEventListener('message', async (d: any) => {
             if (d.data.isDesign && d.data.time == time) {
                 this.design = d.data.design;
+                if(typeof d.data.stamp !== undefined)
+                    this.stamp = d.data.stamp;
 
                 const loader = new TextureLoader();
 

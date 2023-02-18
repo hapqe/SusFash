@@ -18,6 +18,12 @@ export class PhoneHandler extends Behaviour {
 
                 window.addEventListener('objectClick', (e: any) => {
                     if(!this.clicked && e.detail.name.toLowerCase() == "phone") {
+                        if(!beforeShopping) {
+                            setTimeout(() => {
+                                window.parent?.postMessage({tip: "Tippe auf den Power-Knopf!"}, "*");
+                            }, 4000);
+                        }
+                        
                         window.parent?.postMessage({done: true}, "*");
 
                         if(beforeShopping) {
@@ -54,7 +60,8 @@ export class PhoneHandler extends Behaviour {
                         window.parent?.postMessage({playradar: true}, "*");
         
                         setTimeout(() => {
-                            window.parent?.postMessage({tradingScene: true}, "*");
+                            window.parent?.postMessage({tradingscene: true}, "*");
+                            window.parent?.postMessage({done: true}, "*");
                         }, 2000);
                     }
                 })

@@ -252,7 +252,7 @@ main.submit-page {
     align-items: center;
 }
 
-main.submit-page #header {
+main.submit-page #submit-header {
     grid-area: header;
     text-align: center;
     color: white;
@@ -278,6 +278,14 @@ main.submit-page #accept {
 button {
     border: none;
     border-radius: .6em;
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+}
+
+button * {
+    color: black;
 }
 
 .indent {

@@ -19,14 +19,14 @@ app.listen(port, () => {
 );
 
 app.post('/', (req, res, next) => {
-    if(req.body.delete) {
-        deleteUserData(req);
-    }
-    else if(req.body.design) {
+    if(req.body.design) {
         saveDesign(req);
     }
     else if(req.body.collectDesign) {
-        incrementDesign(req);
+        incrementDesignCount(req);
+    }
+    else if(req.body.tradeDesign) {
+        incrementDesignCount(req, "tradeCount");
     }
     else {
         userData(req, true);
@@ -66,20 +66,20 @@ async function userData(req: Request, upload: boolean = false) {
     return { isUserData: true, ...json };
 }
 
-async function deleteUserData(req: Request) {
-    let hash = req.fingerprint?.hash;
+// async function deleteUserData(req: Request) {
+//     let hash = req.fingerprint?.hash;
 
-    let path = `./users/${hash}.json`;
+//     let path = `./users/${hash}.json`;
 
-    try {
-        await fs.promises.unlink(path);
-    }
-    catch {
-        console.log('User data not found');
-    }
-}
+//     try {
+//         await fs.promises.unlink(path);
+//     }
+//     catch {
+//         console.log('User data not found');
+//     }
+// }
 
-async function incrementDesign(req: Request, buy: boolean = true) {
+async function incrementDesignCount(req: Request, id = "buyCount") {
     let path = `./users/${req.body.id}.json`;
     let name = req.body.date;
 
@@ -87,20 +87,20 @@ async function incrementDesign(req: Request, buy: boolean = true) {
     
     try {
         json = JSON.parse(await fs.promises.readFile(path, 'utf8'));
-        const count = (json.designs?.[name]?.buyCount)??0;
+        const count = (json.designs?.[name]?.[id])??0;
 
         if(count == 0) {
-            json.designs[name] = { ...json.designs[name], buyCount: 1 };
+            json.designs[name] = { ...json.designs[name], [id]: 1 };
         }
         else {
-            json.designs[name] = { ...json.designs[name], buyCount: count + 1 };
+            json.designs[name] = { ...json.designs[name], [id]: count + 1 };
         }
     }
     catch {
         json = {
             designs: {
                 [name]: {
-                    buyCount: 1,
+                    [id]: 1
                 }
             }
         }
@@ -116,12 +116,19 @@ async function saveDesign(req: Request) {
 
     let path = `./designs/${name}.png`;
 
-    // data:image
     let data = req.body.design;
 
-    let buffer = Buffer.from(data.split(',')[1], 'base64');
-    
-    await fs.promises.writeFile(path, buffer);
+    try {
+        let buffer = Buffer.from(data.split(',')[1], 'base64');
+        const isBase64png = buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4E && buffer[3] === 0x47 && buffer[4] === 0x0D && buffer[5] === 0x0A && buffer[6] === 0x1A && buffer[7] === 0x0A;
+        if (!isBase64png) {
+            console.log('Not a valid base64 png');
+            return;
+        }
+        await fs.promises.writeFile(path, buffer);
+    } catch {
+        console.log('Error saving design');
+    }
 }
 
 async function getDesign(req: Request, {notFromUser = false, savedDesign = false}) {
@@ -149,6 +156,8 @@ async function getDesign(req: Request, {notFromUser = false, savedDesign = false
         }
     }
 
+    if(!designs[index]) return;
+    
     let path = `./designs/${designs[index]}`;
 
     let data = await fs.promises.readFile(path, 'base64');
@@ -160,26 +169,80 @@ async function getDesign(req: Request, {notFromUser = false, savedDesign = false
     };
 }
 
-async function getDesignFromUser(user: string, not = false) {
-    const designs = await fs.promises.readdir('./designs');
-    const count = designs.length;
+// async function getDesignFromUser(user: string, not = false) {
+//     const designs = await fs.promises.readdir('./designs');
+//     const count = designs.length;
 
-    let index = Math.floor(Math.random() * count);
-    while(!designs[index].startsWith(user) == not) {
-        index = Math.floor(Math.random() * count);
+//     let index = Math.floor(Math.random() * count);
+//     while(!designs[index].startsWith(user) == not) {
+//         index = Math.floor(Math.random() * count);
+//     }
+
+//     let path = `./designs/${designs[index]}`;
+
+//     let data = await fs.promises.readFile(path, 'base64');
+
+//     return {
+//         isDesign: true,
+//         design: `data:image/png;base64,${data}`,
+//         stamp: designs[index]
+//     };
+// }
+
+async function getNamedDesign(req: Request, name: string) {
+    let hash = req.fingerprint?.hash;
+    
+    const filename = `${hash}_${name}`;
+    const path = `./designs/${filename}.png`;
+
+    let data: any;
+    try {
+        data = await fs.promises.readFile(path, 'base64');
+    } catch {
+        
     }
-
-    let path = `./designs/${designs[index]}`;
-
-    let data = await fs.promises.readFile(path, 'base64');
 
     return {
         isDesign: true,
         design: `data:image/png;base64,${data}`,
-        stamp: designs[index]
+        stamp: filename
     };
+}
+
+async function deleteNamedDesign(req: Request, name: string) {
+    let hash = req.fingerprint?.hash;
+
+    const filename = `${hash}_${name}`;
+    const path = `./designs/${filename}.png`;
+
+    try {
+        await fs.promises.unlink(path);
+    }
+    catch {
+
+    }
+
+    let userPath = `./users/${hash}.json`;
+
+    let json;
+    
+    try {
+        json = JSON.parse(await fs.promises.readFile(userPath, 'utf8'));
+        delete json.designs[name];
+        await fs.promises.writeFile(userPath, JSON.stringify(json));
+    }
+    catch {
+    }
 }
 
 app.post('/design', async (req, res, next) => {
     getDesign(req, {...req.body}).then(d => res.send(d));
+});
+
+app.post('/getdesign', async (req, res, next) => {
+    getNamedDesign(req, req.body.designName).then(d => res.send(d));
+});
+
+app.post('/deletedesign', async (req, res, next) => {
+    deleteNamedDesign(req, req.body.designName).then(d => res.send(d));
 });
