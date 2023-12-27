@@ -2,7 +2,6 @@ import express, { Express, Request } from "express";
 import bodyParser from "body-parser";
 import FingerPrint from "express-fingerprint"
 import fs from "fs";
-import cors from "cors";
 
 const port = 8000;
 
@@ -15,23 +14,23 @@ app.use(FingerPrint())
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-    }
+}
 );
 
 app.post('/', (req, res, next) => {
-    if(req.body.design) {
+    if (req.body.design) {
         saveDesign(req);
     }
-    else if(req.body.collectDesign) {
+    else if (req.body.collectDesign) {
         incrementDesignCount(req);
     }
-    else if(req.body.tradeDesign) {
+    else if (req.body.tradeDesign) {
         incrementDesignCount(req, "tradeCount");
     }
     else {
         userData(req, true);
     }
-    
+
     res.json({ status: 'ok' });
     next();
 });
@@ -49,7 +48,7 @@ async function userData(req: Request, upload: boolean = false) {
     let path = `./users/${hash}.json`;
 
     let json;
-    
+
     try {
         json = JSON.parse(await fs.promises.readFile(path, 'utf8'));
     }
@@ -57,9 +56,9 @@ async function userData(req: Request, upload: boolean = false) {
         json = {};
     }
 
-    if(upload) {
+    if (upload) {
         json = { ...json, ...req.body };
-        
+
         await fs.promises.writeFile(path, JSON.stringify(json));
     }
 
@@ -84,12 +83,12 @@ async function incrementDesignCount(req: Request, id = "buyCount") {
     let name = req.body.date;
 
     let json;
-    
+
     try {
         json = JSON.parse(await fs.promises.readFile(path, 'utf8'));
-        const count = (json.designs?.[name]?.[id])??0;
+        const count = (json.designs?.[name]?.[id]) ?? 0;
 
-        if(count == 0) {
+        if (count == 0) {
             json.designs[name] = { ...json.designs[name], [id]: 1 };
         }
         else {
@@ -131,33 +130,33 @@ async function saveDesign(req: Request) {
     }
 }
 
-async function getDesign(req: Request, {notFromUser = false, savedDesign = false}) {
+async function getDesign(req: Request, { notFromUser = false, savedDesign = false }) {
     const designs = await fs.promises.readdir('./designs');
     const count = designs.length;
 
     const i = () => Math.floor(Math.random() * count);
-    
+
     let index = i();
     let hash = req.fingerprint?.hash;
 
     let maxTries = 10;
-    if(notFromUser && hash) {
-        while(designs[index].startsWith(hash)) {
+    if (notFromUser && hash) {
+        while (designs[index].startsWith(hash)) {
             index = i();
             maxTries--;
-            if(maxTries == 0) break;
+            if (maxTries == 0) break;
         }
     }
-    if(savedDesign && hash) {
-        while(!designs[index].startsWith(hash)) {
+    if (savedDesign && hash) {
+        while (!designs[index].startsWith(hash)) {
             index = i();
             maxTries--;
-            if(maxTries == 0) break;
+            if (maxTries == 0) break;
         }
     }
 
-    if(!designs[index]) return;
-    
+    if (!designs[index]) return;
+
     let path = `./designs/${designs[index]}`;
 
     let data = await fs.promises.readFile(path, 'base64');
@@ -191,7 +190,7 @@ async function getDesign(req: Request, {notFromUser = false, savedDesign = false
 
 async function getNamedDesign(req: Request, name: string) {
     let hash = req.fingerprint?.hash;
-    
+
     const filename = `${hash}_${name}`;
     const path = `./designs/${filename}.png`;
 
@@ -199,7 +198,7 @@ async function getNamedDesign(req: Request, name: string) {
     try {
         data = await fs.promises.readFile(path, 'base64');
     } catch {
-        
+
     }
 
     return {
@@ -225,7 +224,7 @@ async function deleteNamedDesign(req: Request, name: string) {
     let userPath = `./users/${hash}.json`;
 
     let json;
-    
+
     try {
         json = JSON.parse(await fs.promises.readFile(userPath, 'utf8'));
         delete json.designs[name];
@@ -236,7 +235,7 @@ async function deleteNamedDesign(req: Request, name: string) {
 }
 
 app.post('/design', async (req, res, next) => {
-    getDesign(req, {...req.body}).then(d => res.send(d));
+    getDesign(req, { ...req.body }).then(d => res.send(d));
 });
 
 app.post('/getdesign', async (req, res, next) => {

@@ -1,6 +1,7 @@
 const text = document.querySelector('#text');
 
 function showText(str, props = {}) {
+
     const style = window.getComputedStyle(document.documentElement);
     const wordDur = parseInt(style.getPropertyValue('--word-time'));
     const after = props.after ?? 500;
@@ -20,25 +21,27 @@ function showText(str, props = {}) {
     let d = count * wordDur + duration;
     requestAnimationFrame(() => {
         text.setAttribute('data-blur', false);
+        document.querySelector('.fullscreen').classList.add('pointer-active');
+
     });
 
-    setTimeout(() => {
-        text.setAttribute('data-blur', true);
-    }, d);
+    // setTimeout(() => {
+    //     text.setAttribute('data-blur', true);
+    // }, d);
 
     let height = text.parentElement.clientHeight - text.clientHeight * 2;
 
     let a = 'center';
     switch (position) {
         case 'top':
-        a = "start";
-        break;
+            a = "start";
+            break;
         case 'bottom':
-        a = "end";
-        break;
+            a = "end";
+            break;
     }
     text.parentElement.style.alignItems = a;
-        
+
     playSound('playtyping');
 
     const typingDuration = count * wordDur + 500;
@@ -51,5 +54,17 @@ function showText(str, props = {}) {
         playSound('playbubble');
     }, typingDuration + duration - 500);
 
-    return new Promise((resolve) => setTimeout(resolve, 2 * (count * wordDur) + duration + after));
+    // return new Promise((resolve) => setTimeout(resolve, 2 * (count * wordDur) + duration + after));
+    return new Promise((resolve) => {
+        let action = () => {
+            text.setAttribute('data-blur', true);
+
+            setTimeout(() => {
+                document.removeEventListener('click', action);
+                document.querySelector('.fullscreen').classList.remove('pointer-active');
+                resolve();
+            }, 300);
+        };
+        document.addEventListener('click', action);
+    });
 }

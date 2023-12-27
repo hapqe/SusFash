@@ -1,25 +1,25 @@
 let frame = document.querySelector('iframe');
 
 window.addEventListener('message', (e) => {
-    if(e.data.secret) {
+    if (e.data.secret) {
         showSecret(e.data.secret)
         post({
             [e.data.secret]: true
         });
     }
-    if(e.data.fetchData) {
+    if (e.data.fetchData) {
         userData();
     }
-    if(e.data.fetchDesign) {
+    if (e.data.fetchDesign) {
         delete e.data.fetchDesign;
         getDesign(e.data);
     }
-    if(e.data.design) {
+    if (e.data.design) {
         (async () => {
             const content = await fetch('/lib/publish.html')
             const madeDesign = !!window.userData.madeDesign;
             requestAnimationFrame(() => {
-                if(madeDesign) {
+                if (madeDesign) {
                     document.getElementById('submit-header').innerHTML = "Willst du dein Design veröffentlichen?";
                 }
                 else {
@@ -27,7 +27,7 @@ window.addEventListener('message', (e) => {
                 }
             });
             const text = await content.text();
-            
+
             const info = setInfoPage({
                 hideTitle: true,
                 content: text,
@@ -38,7 +38,7 @@ window.addEventListener('message', (e) => {
             showInfoPage();
         })();
     }
-    if(e.data.showPanel) {
+    if (e.data.showPanel) {
         const name = e.data.showPanel;
         (async () => {
             const content = await fetch('/lib/' + name + '.html');
@@ -50,41 +50,41 @@ window.addEventListener('message', (e) => {
             showInfoPage();
         })();
     }
-    if(e.data.collectCloth) {
+    if (e.data.collectCloth) {
         post({
             collectDesign: true,
             id: e.data.id,
             date: e.data.date,
         });
     }
-    if(e.data.tradeCloth) {
+    if (e.data.tradeCloth) {
         post({
             tradeDesign: true,
             id: e.data.id,
             date: e.data.date,
         });
     }
-    if(e.data.tip) {
+    if (e.data.tip) {
         showInfo(e.data.tip);
     }
-    if(e.data.toHub) {
+    if (e.data.toHub) {
         setScene('scenes/hub');
     }
-    if(e.data.stopTimer) {
+    if (e.data.stopTimer) {
         stopTimer();
     }
 });
 
 window.post = function (data, url = "/") {
-    return fetch(url, { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)});
+    return fetch(url, { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
 }
 
 const userData = async () => {
-    if(!window.userData) {
+    if (!window.userData) {
         let data = await fetch('/userData', { method: "get", headers: { 'Content-Type': 'application/json' } });
         data = await data.json()
         window.userData = data;
-        // frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
+        frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
     }
     frame.contentWindow.postMessage(window.userData, '*');
 };
@@ -93,8 +93,8 @@ userData();
 
 const getDesign = async (additional) => {
     let data;
-    if(additional.savedDesign && typeof savedDesign !== 'undefined') {
-        data = 
+    if (additional.savedDesign && typeof savedDesign !== 'undefined') {
+        data =
         {
             design: savedDesign,
             isDesign: true,
@@ -104,7 +104,7 @@ const getDesign = async (additional) => {
         data = await fetch('/design', { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...additional }) });
         data = await data.json()
     }
-    frame.contentWindow.postMessage({...data, time: additional.time}, '*');
+    frame.contentWindow.postMessage({ ...data, time: additional.time }, '*');
 };
 
 function deleteUser() {
@@ -123,29 +123,29 @@ window.addEventListener('resize', setScreenSize);
 
 function setInfoPage(params) {
     let content = document.getElementById('info-page-content');
-    if(params.title) {
+    if (params.title) {
         document.getElementById('info-page-title-text').innerText = params.title;
     }
-    if(params.hideTitle) {
+    if (params.hideTitle) {
         document.getElementById('info-page-title').style.display = 'none';
     }
     else {
         document.getElementById('info-page-title').style.display = 'block';
     }
-    if(params.content) {
+    if (params.content) {
         content.innerHTML = params.content;
     }
-    if(params.icon) {
+    if (params.icon) {
         document.getElementById('info-page-icon-left').src = 'svgs/' + params.icon + '.svg';
         document.getElementById('info-page-icon-right').src = 'svgs/' + params.icon + '.svg';
     }
-    if(params.left) {
+    if (params.left) {
         document.getElementById('info-page-icon-left').src = 'svgs/' + params.left + '.svg';
     }
-    if(params.right) {  
+    if (params.right) {
         document.getElementById('info-page-icon-right').src = 'svgs/' + params.right + '.svg';
     }
-    if(params.padding) {
+    if (params.padding) {
         document.getElementById('info-page-content').style.padding = params.padding;
     }
     return content;
