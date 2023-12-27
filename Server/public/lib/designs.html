@@ -30,7 +30,11 @@
 
 <div id="wrapper" class="designs-wrapper">
     <div id="button-wrapper">
-        <button>
+        <button onclick="{
+            setScene('scenes/design');
+            hideInfoPage();
+            window.onlyDesign = true;
+            }">
             <img style="margin-left: .5em" src="svgs/plus.svg" alt="">
             <h3 style="margin: .5em; color: black;">Neues Design</h3>
         </button>

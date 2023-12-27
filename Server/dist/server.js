@@ -60,7 +60,10 @@ function userData(req, upload = false) {
             json = {};
         }
         if (upload) {
-            json = Object.assign(Object.assign({}, json), req.body);
+            // json = { ...json, ...req.body };
+            const merge = (t, s) => { const o = Object, a = o.assign; for (const k of o.keys(s))
+                s[k] instanceof o && a(s[k], merge(t[k], s[k])); return a(t || {}, s), t; };
+            merge(req.body, json);
             yield fs_1.default.promises.writeFile(path, JSON.stringify(json));
         }
         return Object.assign({ isUserData: true }, json);
@@ -120,6 +123,9 @@ function saveDesign(req) {
                 return;
             }
             yield fs_1.default.promises.writeFile(path, buffer);
+            delete req.body.design;
+            req.body.designs = { [time]: { buyCount: 0 } };
+            userData(req, true);
         }
         catch (_b) {
             console.log('Error saving design');

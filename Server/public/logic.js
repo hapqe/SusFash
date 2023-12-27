@@ -17,15 +17,15 @@ window.addEventListener('message', (e) => {
     if (e.data.design) {
         (async () => {
             const content = await fetch('/lib/publish.html')
-            const madeDesign = !!window.userData.madeDesign;
-            requestAnimationFrame(() => {
+            const madeDesign = !!window.userData.designs;
+            setTimeout(() => {
                 if (madeDesign) {
                     document.getElementById('submit-header').innerHTML = "Willst du dein Design veröffentlichen?";
                 }
                 else {
                     document.getElementById('submit-header').innerHTML = "Wird das dein erstes Kleidungsdesign werden?";
                 }
-            });
+            }, 100);
             const text = await content.text();
 
             const info = setInfoPage({
@@ -82,9 +82,10 @@ window.post = function (data, url = "/") {
 const userData = async () => {
     if (!window.userData) {
         let data = await fetch('/userData', { method: "get", headers: { 'Content-Type': 'application/json' } });
-        data = await data.json()
+        data = await data.json();
         window.userData = data;
         frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
+        // frame.src = 'scenes/packaging';
     }
     frame.contentWindow.postMessage(window.userData, '*');
 };

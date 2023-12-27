@@ -57,7 +57,9 @@ async function userData(req: Request, upload: boolean = false) {
     }
 
     if (upload) {
-        json = { ...json, ...req.body };
+        // json = { ...json, ...req.body };
+        const merge = (t: any, s: any) => { const o = Object, a = o.assign; for (const k of o.keys(s)) s[k] instanceof o && a(s[k], merge(t[k], s[k])); return a(t || {}, s), t }
+        merge(req.body, json);
 
         await fs.promises.writeFile(path, JSON.stringify(json));
     }
@@ -125,6 +127,11 @@ async function saveDesign(req: Request) {
             return;
         }
         await fs.promises.writeFile(path, buffer);
+
+        delete req.body.design;
+        req.body.designs = { [time]: { buyCount: 0 } };
+
+        userData(req, true);
     } catch {
         console.log('Error saving design');
     }

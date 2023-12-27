@@ -1,12 +1,12 @@
 let shirtCount = 5;
 
 window.addEventListener('message', async (e) => {
-    if(e.data.shirtCount) {
+    if (e.data.shirtCount) {
         shirtCount = e.data.shirtCount;
     }
 
-    if(!Object.keys(e.data)[0]) return;
-    
+    if (!Object.keys(e.data)[0]) return;
+
     const k = Object.keys(e.data)[0].toLowerCase();
 
     if (k.endsWith('scene')) {
@@ -27,21 +27,21 @@ window.addEventListener('message', async (e) => {
             playSound('fadewind');
         }
 
-        if(scene === 'design') {
-            if(!playerRunning)
-            transitionScene(
-                'design',
-                {
-                    stop: 'wind',
-                    text: 'cotton_design',
-                    tip: "Tippe auf Werkzeuge, um sie zu benutzen!",
-                },
-            )
+        if (scene === 'design') {
+            if (!playerRunning)
+                transitionScene(
+                    'design',
+                    {
+                        stop: 'wind',
+                        text: 'cotton_design',
+                        tip: "Tippe auf Werkzeuge, um sie zu benutzen!",
+                    },
+                )
             else
-            setScene('scenes/packaging');
+                setScene('scenes/packaging');
         }
 
-        if(scene === 'packaging') {
+        if (scene === 'packaging') {
             transitionScene(
                 'packaging',
                 {
@@ -52,10 +52,10 @@ window.addEventListener('message', async (e) => {
             playSound('fadeconveyor')
         }
 
-        if(scene === 'shipping') {
+        if (scene === 'shipping') {
             playSound('stopconveyor')
             playSound('fadewind');
-            if(!playerRunning) {
+            if (!playerRunning) {
                 await transitionScene(
                     'shipping'
                 )
@@ -65,34 +65,34 @@ window.addEventListener('message', async (e) => {
             }
             playSound('stoppiano');
             playSound('stopwind');
-            if(!playerRunning)
-            await darken();
-            
+            if (!playerRunning)
+                await darken();
+
             await setScene('scenes/phone');
-            if(!playerRunning)
-            setTimeout(() => {
-                showInfo('Tippe auf das Handy!');
-            }, 2000);
+            if (!playerRunning)
+                setTimeout(() => {
+                    showInfo('Tippe auf das Handy!');
+                }, 2000);
             playSound('stopwind');
-            frame.contentWindow.postMessage({beforeShopping: true}, '*');
+            frame.contentWindow.postMessage({ beforeShopping: true }, '*');
         }
 
-        if(scene === 'shopping') {
+        if (scene === 'shopping') {
             setScene('scenes/shopping');
             playSound('stopwind');
         }
 
-        if(scene === 'phone') {
+        if (scene === 'phone') {
             playSound('stopStress');
             playSound('playbreak');
-            if(!playerRunning) {
+            if (!playerRunning) {
                 await darken();
 
                 const c = shirtCount;
 
                 let text = `Du hast gerade ${c} Kleidungsstücke gekauft. Insgesammt bedeutet das ${c * 11} Kilogramm CO2-Emissionen. ${c} * 2700 Liter Wasserverbrauch, also unglaubliche ${Math.round(c * 2700 / 165)} volle Badewannen wurden bei der Produktion dieser Kleidungsstücke verbraucht.\nDeine gekauften Kleidungsstücke sind zudem ${c * 34}.225 Kilometer um die Welt gereist. Das sind ${Math.round(c * 34225 / 40075)} Rundflüge um den Äquator.`
 
-                if(c < 60) {
+                if (c < 60) {
                     text += '\nTrotzdem waren das weniger Kleidungsstücke, als die 60 Stück, die ein durchschnittlicher deutscher Konsument jährlich kauft.'
                 }
 
@@ -101,12 +101,12 @@ window.addEventListener('message', async (e) => {
             }
 
             await setScene('scenes/phone');
-            frame.contentWindow.postMessage({beforeShopping: false}, '*');
+            frame.contentWindow.postMessage({ beforeShopping: false }, '*');
         }
 
-        if(scene === 'trading') {
+        if (scene === 'trading') {
             await hideTransition();
-            
+
             transitionScene(
                 'trading',
                 {
@@ -116,9 +116,9 @@ window.addEventListener('message', async (e) => {
             )
         }
 
-        if(scene === 'final') {
-            await transitionScene('final', {darken: true, stop: 'wind'});
-            post({playedThrough: true})
+        if (scene === 'final') {
+            await transitionScene('final', { darken: true, stop: 'wind' });
+            post({ playedThrough: true })
         }
     }
 });
@@ -133,7 +133,7 @@ async function showParagraphs(file, props = {}) {
 async function showParagraphsString(text, props = {}) {
     text = text.replace('\n\n', '\n');
     const lines = text.split('\n');
-    
+
     for (let i = 0; i < lines.length; i++) {
         await showText(lines[i], props);
     }
@@ -142,7 +142,7 @@ async function showParagraphsString(text, props = {}) {
 async function setScene(scene) {
     const frame = document.querySelector('iframe');
     frame.src = scene;
-    
+
     return new Promise((resolve) => {
         window.addEventListener('message', (e) => {
             if (e.data.sceneLoaded) {
@@ -153,42 +153,42 @@ async function setScene(scene) {
 }
 
 async function transitionScene(scene, props = {}) {
-    if(props.stop instanceof String)
+    if (props.stop instanceof String)
         playSound('stop' + props.stop);
 
-    if(props.stop instanceof Array)
+    if (props.stop instanceof Array)
         props.stop.forEach((s) => playSound('stop' + s));
-        
-    if(props.play instanceof String) 
+
+    if (props.play instanceof String)
         playSound(props.play);
 
-    if(props.play instanceof Array)
+    if (props.play instanceof Array)
         props.play.forEach((s) => playSound(s));
-        
-    if(!playerRunning) {
+
+    if (!playerRunning) {
         const delay = props.delay ?? 500;
-    
+
         await wait(delay);
-    
-        if(props.clouds)
-        await clouds();
+
+        if (props.clouds)
+            await clouds();
         else if (props.darken)
-        await darken();
+            await darken();
         else await transition();
-        
-        if(props.text)
-        await Promise.all([
-            showParagraphs('./text/' + props.text + '.txt', { color: 'black' }),
-            setScene('scenes/' + scene)
-        ]);
+
+        if (props.text)
+            await Promise.all([
+                showParagraphs('./text/' + props.text + '.txt', { color: 'black' }),
+                setScene('scenes/' + scene)
+            ]);
         else await setScene('scenes/' + scene);
 
-        if(props.clouds)
-        await hideClouds();
-        else if(props.darken) await blink();
+        if (props.clouds)
+            await hideClouds();
+        else if (props.darken) await blink();
         else await hideTransition();
 
-        if(props.tip) {
+        if (props.tip) {
             showInfo(props.tip)
         }
     }
