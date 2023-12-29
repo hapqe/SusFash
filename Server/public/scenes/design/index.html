@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" href="./assets/favicon.8d99ceea.ico">
@@ -14,7 +15,7 @@
   <meta name="robots" content="index,follow">
   <meta name="url" content="http://needle.tools">
 
-  
+
   <script type="module" crossorigin src="./assets/index.56e8a71f.js"></script>
   <link rel="stylesheet" href="./assets/index.b8cb86a4.css">
 </head>
@@ -25,8 +26,8 @@
     window.global = window;
     var parcelRequire;
   </script>
-  
-  
+
+
   <script>
     function setTool(e) {
       e.preventDefault();
@@ -39,7 +40,7 @@
     function submitCloth(e) {
       e.preventDefault();
       window.dispatchEvent(new CustomEvent('submitCloth', { detail: e }));
-      window.parent?.postMessage({playscore: true}, "*");
+      window.parent?.postMessage({ playscore: true }, "*");
     }
   </script>
 
@@ -61,4 +62,5 @@
     <canvas id="submitCanvas" hidden color="white" width="200" height="200"></canvas>
   </div>
 </body>
+
 </html>

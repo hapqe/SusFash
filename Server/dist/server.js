@@ -16,6 +16,7 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_fingerprint_1 = __importDefault(require("express-fingerprint"));
 const fs_1 = __importDefault(require("fs"));
+const bad_words_1 = __importDefault(require("bad-words"));
 const port = 8000;
 const app = (0, express_1.default)();
 app.use(express_1.default.static('public'));
@@ -233,11 +234,15 @@ app.post('/getdesign', (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 app.post('/deletedesign', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     deleteNamedDesign(req, req.body.designName).then(d => res.send(d));
 }));
+const filter = new bad_words_1.default();
 app.post('/time', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const time = req.body.time;
     const name = req.body.name;
-    console.log(time, name);
-    if (!time || !name)
+    if (typeof time != "number" ||
+        typeof name != "string" ||
+        name.length > 20 ||
+        name.length < 3 ||
+        filter.isProfane(name))
         return;
     let current = "";
     try {
@@ -249,5 +254,16 @@ app.post('/time', (req, res, next) => __awaiter(void 0, void 0, void 0, function
     let updated = JSON.parse(current);
     updated[name] = time;
     yield fs_1.default.promises.writeFile('./time.json', JSON.stringify(updated));
+    next();
+}));
+app.get('/ranking', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    let current = "";
+    try {
+        current = yield fs_1.default.promises.readFile('./time.json', 'utf8');
+    }
+    catch (_b) {
+        current = "{}";
+    }
+    res.send(current);
     next();
 }));

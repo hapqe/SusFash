@@ -3,7 +3,14 @@
     src: url(https://www.mak.at/jart/prj3/mak-resp/resources/fonts/mak/GerstnerProgrammMAKWeb-Medium.woff2);
 }
 
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li {
     font-family: Gerstner Programm;
     color: white;
 }

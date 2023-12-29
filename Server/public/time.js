@@ -3,6 +3,20 @@ let timerActive = false;
 let time = 0;
 let timeString = '00:00:000';
 
+function createTimeString(time) {
+    const zeroPad = (num, places) => String(num).padStart(places, '0')
+
+    const seconds = Math.floor(time / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const millis = time % 1000;
+
+    const s = zeroPad(seconds, 2);
+    const m = zeroPad(minutes, 2);
+    const ms = zeroPad(millis, 3);
+
+    return `${m}:${s}:${ms}`;
+}
+
 function run() {
     const wrapper = document.querySelector('#time-wrapper');
     wrapper.style.display = playerRunning ? 'flex' : 'none';
@@ -16,19 +30,11 @@ function run() {
         if (e.data.done) timerActive = false;
     });
 
+
+
     function update() {
-        const zeroPad = (num, places) => String(num).padStart(places, '0')
-
-        const seconds = Math.floor(time / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const millis = time % 1000;
-
-        const s = zeroPad(seconds, 2);
-        const m = zeroPad(minutes, 2);
-        const ms = zeroPad(millis, 3);
-
-        timeString = `${m}:${s}:${ms}`;
-        element.innerHTML = timeString;
+        timeString = createTimeString(time);
+        element.innerHTML = ts;
 
         const now = Date.now();
         const diff = now - last;

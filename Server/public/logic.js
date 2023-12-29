@@ -90,7 +90,7 @@ const userData = async (refresh = false) => {
 
         if (!refresh)
             frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
-        // frame.src = 'scenes/packaging';
+        // frame.src = 'scenes/design';
     }
     frame.contentWindow.postMessage(window.userData, '*');
 };

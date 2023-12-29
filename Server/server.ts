@@ -2,6 +2,7 @@ import express, { Express, Request } from "express";
 import bodyParser from "body-parser";
 import FingerPrint from "express-fingerprint"
 import fs from "fs";
+import Filter from "bad-words";
 
 const port = 8000;
 
@@ -253,16 +254,22 @@ app.post('/deletedesign', async (req, res, next) => {
     deleteNamedDesign(req, req.body.designName).then(d => res.send(d));
 });
 
+const filter = new Filter();
+
 app.post('/time', async (req, res, next) => {
     const time = req.body.time;
     const name = req.body.name;
-    console.log(time, name);
-    if (!time || !name) return;
+    if (
+        typeof time != "number" ||
+        typeof name != "string" ||
+        name.length > 20 ||
+        name.length < 3 ||
+        filter.isProfane(name)
+    ) return;
 
     let current = "";
     try {
         current = await fs.promises.readFile('./time.json', 'utf8');
-
     }
     catch {
         current = "{}";
@@ -271,6 +278,20 @@ app.post('/time', async (req, res, next) => {
     let updated = JSON.parse(current);
     updated[name] = time;
     await fs.promises.writeFile('./time.json', JSON.stringify(updated));
+
+    next();
+});
+
+app.get('/ranking', async (req, res, next) => {
+    let current = "";
+    try {
+        current = await fs.promises.readFile('./time.json', 'utf8');
+    }
+    catch {
+        current = "{}";
+    }
+
+    res.send(current);
 
     next();
 });

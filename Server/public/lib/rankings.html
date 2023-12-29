@@ -1,10 +1,65 @@
 <div id="ranking-wrapper">
-    <h3>Es gibt noch keine Speedruns.</h3>
+    <ul>
+
+    </ul>
+    <!-- <h3 hidden>Es gibt noch keine Speedruns.</h3> -->
 </div>
+
+<img hidden src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="{
+    (async () => {
+        // const rankings = await (await post({}, '/ranking')).json();
+    const req = await fetch('ranking', { method: 'get', headers: { 'Content-Type' : 'application/json' } }); 
+    const rankings = await req.json();
+    if(Object.keys(rankings).length === 0) {
+        alert('Es gibt noch keine Speedruns.');
+        document.querySelector('#ranking-wrapper h3').removeAttribute('hidden');
+        return;
+    }
+    const wrapper = document.querySelector('#ranking-wrapper ul');
+    const sorted = Object.entries(rankings).sort((a, b) => a[1] - b[1]);
+    sorted.forEach((entry, i) => {
+        const [key, value] = entry;
+        const li = document.createElement('li');
+        li.innerText = `${i + 1}. ${key}: ${createTimeString(value)}`;
+        wrapper.appendChild(li);
+    });
+    })();
+    }">
 
 <style>
     #ranking-wrapper h3 {
         color: rgba(255, 255, 255, 0.844);
         text-align: center;
+    }
+
+    #ranking-wrapper h4 {
+        color: rgba(255, 255, 255, 0.472);
+        margin: 0;
+    }
+
+    #ranking-wrapper li:nth-child(1) {
+        color: gold;
+    }
+
+    /* Silver */
+    #ranking-wrapper li:nth-child(2) {
+        color: silver;
+    }
+
+    /* Bronze */
+    #ranking-wrapper li:nth-child(3) {
+        color: #cd7f32;
+        /* Bronze color */
+    }
+
+    #ranking-wrapper ul li {
+        font-size: large;
+        font-weight: bolder;
+        color: rgba(255, 255, 255, 0.472);
+        margin: 0;
+    }
+
+    #ranking-wrapper ul {
+        list-style: none;
     }
 </style>
