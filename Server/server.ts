@@ -252,3 +252,25 @@ app.post('/getdesign', async (req, res, next) => {
 app.post('/deletedesign', async (req, res, next) => {
     deleteNamedDesign(req, req.body.designName).then(d => res.send(d));
 });
+
+app.post('/time', async (req, res, next) => {
+    const time = req.body.time;
+    const name = req.body.name;
+    console.log(time, name);
+    if (!time || !name) return;
+
+    let current = "";
+    try {
+        current = await fs.promises.readFile('./time.json', 'utf8');
+
+    }
+    catch {
+        current = "{}";
+    }
+
+    let updated = JSON.parse(current);
+    updated[name] = time;
+    await fs.promises.writeFile('./time.json', JSON.stringify(updated));
+
+    next();
+});

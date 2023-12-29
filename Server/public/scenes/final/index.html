@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ending</title>
 </head>
+
 <body>
     <div class="fill">
         <h1 id="congrats">Danke fürs Spielen!</h1>
@@ -25,7 +27,8 @@
     <span>
         <img src="info.svg" alt="" style="margin-left: 2em; margin-right: 0em;">
         <h5 style="color: #bbb0ab; margin-right: 2em;">
-            Dein Fortschritt und deine Designs bleiben gespeichert. Im Hub hast du die Mögichkeit, gegen andere Spieler anzutreten, neue Designs zu entwerfen, und das Spiel nocheinmal durchzuspielen.
+            Dein Fortschritt und deine Designs bleiben gespeichert. Im Hub hast du die Mögichkeit, gegen andere Spieler
+            anzutreten, neue Designs zu entwerfen, und das Spiel nocheinmal durchzuspielen.
         </h5>
     </span>
 </body>
@@ -40,20 +43,25 @@
             hub.onclick = () => {
                 const name = prompt("Gebe einen Namen ein, unter dem dich andere Spieler sehen werden.");
                 if (name) {
-                    window.parent.postMessage({toHub: true}, '*');
+                    window.parent.postMessage({ toHub: true }, '*');
+                    window.parent.postMessage({ uploadTime: true, name }, '*');
+                }
+                else if (name.length > 3)
+                    window.parent?.postMessage({ tip: "Name zu kurz!" }, "*");
+                else if (name.length < 20) {
+                    window.parent?.postMessage({ tip: "Name zu lang!" }, "*");
                 }
                 else {
-                    window.parent?.postMessage({tip: "Name ungültig!"}, "*");
+                    window.parent?.postMessage({ tip: "Name ungültig!" }, "*");
                 }
-                // upload stuff
             }
             hub.querySelector("img").src = "stopwatch.svg";
         }
     });
 
-    window.parent?.postMessage({stopTimer: true}, "*");
-    window.parent?.postMessage({sceneLoaded: true}, "*");
-    
+    window.parent?.postMessage({ stopTimer: true }, "*");
+    window.parent?.postMessage({ sceneLoaded: true }, "*");
+
     setTimeout(() => {
     }, 200);
 </script>
@@ -61,7 +69,7 @@
     body {
         background-color: black;
     }
-    
+
     span {
         display: flex;
         justify-content: center;
@@ -70,7 +78,7 @@
         position: absolute;
         bottom: 0;
         width: 100vw;
-        background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1));
+        background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
     }
 
     span * {
@@ -87,7 +95,7 @@
         align-items: center;
         pointer-events: none;
     }
-    
+
     body {
         margin: 0;
         padding: 0;
@@ -101,16 +109,16 @@
     }
 
     button {
-      all: unset;
-      height: 2.5rem;
-      background: white;
-      border-radius: .5em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        all: unset;
+        height: 2.5rem;
+        background: white;
+        border-radius: .5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-      transform: translateY(10px);
-    opacity: 0;
+        transform: translateY(10px);
+        opacity: 0;
     }
 
     img {
@@ -119,10 +127,10 @@
         margin-right: .5em;
     }
 
-    h2{
+    h2 {
         margin-right: .5em;
     }
-    
+
     .fill {
         width: 100vw;
         height: 100vh;
@@ -137,11 +145,17 @@
     }
 
     @font-face {
-    font-family: Gerstner Programm;
-    src: url(https://www.mak.at/jart/prj3/mak-resp/resources/fonts/mak/GerstnerProgrammMAKWeb-Medium.woff2);
-}
+        font-family: Gerstner Programm;
+        src: url(https://www.mak.at/jart/prj3/mak-resp/resources/fonts/mak/GerstnerProgrammMAKWeb-Medium.woff2);
+    }
 
-    p, h1, h2, h3, h4, h5, h6 {
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         font-family: Gerstner Programm;
         color: white;
     }
@@ -156,6 +170,7 @@
             filter: blur(10px);
             transform: scale(1.5);
         }
+
         100% {
             filter: blur(0px);
             transform: scale(1);
@@ -197,4 +212,5 @@
         margin-left: 0;
     }
 </style>
+
 </html>

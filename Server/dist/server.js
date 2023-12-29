@@ -233,3 +233,21 @@ app.post('/getdesign', (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 app.post('/deletedesign', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     deleteNamedDesign(req, req.body.designName).then(d => res.send(d));
 }));
+app.post('/time', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const time = req.body.time;
+    const name = req.body.name;
+    console.log(time, name);
+    if (!time || !name)
+        return;
+    let current = "";
+    try {
+        current = yield fs_1.default.promises.readFile('./time.json', 'utf8');
+    }
+    catch (_a) {
+        current = "{}";
+    }
+    let updated = JSON.parse(current);
+    updated[name] = time;
+    yield fs_1.default.promises.writeFile('./time.json', JSON.stringify(updated));
+    next();
+}));

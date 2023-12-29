@@ -73,18 +73,23 @@ window.addEventListener('message', (e) => {
     if (e.data.stopTimer) {
         stopTimer();
     }
+    if (e.data.uploadTime) {
+        post({ name: e.data.name, time }, '/time');
+    }
 });
 
 window.post = function (data, url = "/") {
     return fetch(url, { method: "post", headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
 }
 
-const userData = async () => {
-    if (!window.userData) {
+const userData = async (refresh = false) => {
+    if (refresh || !window.userData) {
         let data = await fetch('/userData', { method: "get", headers: { 'Content-Type': 'application/json' } });
         data = await data.json();
         window.userData = data;
-        frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
+
+        if (!refresh)
+            frame.src = data.playedThrough ? 'scenes/hub' : 'scenes/earth';
         // frame.src = 'scenes/packaging';
     }
     frame.contentWindow.postMessage(window.userData, '*');

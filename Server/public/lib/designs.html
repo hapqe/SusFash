@@ -1,5 +1,6 @@
 <img hidden src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onload="{
     (async () => {
+        await userData(true);
         const data = window.userData;
         const wrapper = document.getElementById('wrapper');
         const html = await (await fetch('lib/design.html')).text();
